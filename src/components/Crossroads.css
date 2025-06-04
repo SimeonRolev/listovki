@@ -1,295 +1,65 @@
 .crossroads-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
 .crossroads {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  background-color: #90EE90; /* Light green background for grass */
-  border: 2px solid #333;
-  margin-bottom: 20px;
+    background: 'lightgreen'; /* Light green background for grass */
+    border: 2px solid #333;
+    width: 400px;
+    height: 400px;
+    background-color: lightgreen;
 }
 
-/* Roads */
+.road-container {
+    width: 50%;
+    height: 50%;
+    position: relative;
+}
+
 .road {
-  position: absolute;
-  background-color: #666; /* Grey roads */
-}
-
-/* Add lane markings to show right-side driving */
-.horizontal-road::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: repeating-linear-gradient(
-    to right,
-    white 0px,
-    white 10px,
-    transparent 10px,
-    transparent 20px
-  );
-  transform: translateY(-50%);
-}
-
-.vertical-road::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: repeating-linear-gradient(
-    to bottom,
-    white 0px,
-    white 10px,
-    transparent 10px,
-    transparent 20px
-  );
-  transform: translateX(-50%);
-}
-
-.horizontal-road {
-  width: 100%;
-  height: 80px;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.vertical-road {
-  width: 80px;
-  height: 100%;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
-  box-sizing: border-box;
-}
-
-/* Intersection center */
-.intersection-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background-color: #666;
-  border: 2px solid #333;
-  z-index: 10;
-}
-
-/* Car slots */
-.car-slot {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* My car positioning - at the bottom of the screen, in the right lane */
-.me-slot {
-  margin-top: auto;
-  align-self: flex-end;
-}
-
-/* Cars */
-.car {
-  position: relative;
-  width: 30px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.car-body {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-}
-
-/* Turn indicator - positioned in the bottom-right quadrant of intersection */
-.turn-indicator {
-  position: absolute;
-  z-index: 15;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  width: 50px;
-  height: 50px;
-  border: 2px solid white;
-  top: 75%;
-  left: 75%;
-  transform: translate(-50%, -50%);
-}
-
-/* Straight arrow (pointing up, tail down toward my car) */
-.turn-straight::before {
-  content: '';
-  position: absolute;
-  background-color: white;
-  width: 4px;
-  height: 30px;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.turn-straight::after {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 12px solid white;
-}
-
-/* Left arrow (curved quarter-circle) */
-.turn-left::before {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  bottom: 5px;
-  right: 23px;
-  border: 3px solid white;
-  border-bottom: transparent;
-  border-left: transparent;
-  border-radius: 0 20px 0 0;
-}
-
-.turn-left::after {
-  content: '';
-  position: absolute;
-  top: 18px;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-right: 10px solid white;
-}
-
-/* Right arrow (curved quarter-circle) */
-.turn-right::before {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  bottom: 5px;
-  left: 23px;
-  border: 3px solid white;
-  border-bottom: transparent;
-  border-right: transparent;
-  border-radius: 20px 0 0 0;
-}
-
-.turn-right::after {
-  content: '';
-  position: absolute;
-  top: 18px;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 10px solid white;
-}
-
-/* Car colors */
-.car-red {
-  background-color: #ff4444;
-}
-
-.car-blue {
-  background-color: #4444ff;
-}
-
-.car-green {
-  background-color: #44ff44;
-}
-
-.car-yellow {
-  background-color: #ffff44;
-}
-
-
-
-/* Task info */
-.task-info {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.task-info h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.task-info pre {
-  margin: 0;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #555;
-  white-space: pre-wrap;
-}
-
-/* Responsive design */
-@media (max-width: 600px) {
-  .crossroads {
-    width: 300px;
-    height: 300px;
-  }
-  
-  .horizontal-road {
-    height: 60px;
-    width: 100%;
-    padding: 0 15px;
-  }
-  
-  .vertical-road {
-    width: 60px;
+    width: 100px;
     height: 100%;
-    padding: 15px 0;
-  }
-  
-  .intersection-center {
-    width: 60px;
+    position: absolute;
+    right: -50px;
+    background-color: grey;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        width: 2px;
+        border-right: 2px dashed white;
+    }
+}
+
+.road-right {
+    transform: rotate(90deg);
+    transform-origin: bottom right;
+}
+
+.road-bottom {
+    transform: rotate(180deg);
+    transform-origin: bottom right;
+}
+
+.road-left {
+    transform: rotate(270deg);
+    transform-origin: bottom right;
+}
+
+.car {
+    width: 30px;
     height: 60px;
-  }
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    border-radius: 4px;
+    border: 2px solid black;   
 }
