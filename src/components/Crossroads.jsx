@@ -11,24 +11,10 @@ const Crossroads = ({ task }) => {
     
     return (
       <div 
-        className={`car car-${car.color}`}
-        title={`${car.position} ${car.color} car going ${car.turn}`}
+        className={`car`}
+        style={{ backgroundColor: car.color }}
       >
         <div className="car-body"></div>
-      </div>
-    );
-  };
-
-  const renderMyCar = () => {
-    return renderCar(myCar);
-  };
-
-  const renderTurnIndicator = (car, quadrant) => {
-    if (!car) return null;
-    
-    return (
-      <div className={`turn-indicator turn-${car.turn} ${quadrant}`}>
-        {/* Arrow shape created with CSS pseudo-elements */}
       </div>
     );
   };
@@ -47,22 +33,22 @@ const Crossroads = ({ task }) => {
       <div className="crossroads">
         <div className='road-container'>
             <div className='road'>
-                <div className='car' style={{ backgroundColor: 'red' }} />
+                {renderCar(frontCar)}
             </div>
         </div>
         <div className='road-container road-right'>
             <div className='road'>
-                <div className='car' style={{ backgroundColor: 'red' }} />
+                {renderCar(rightCar)}
             </div>
         </div>
         <div className='road-container road-bottom'>
             <div className='road'>
-                <div className='car' style={{ backgroundColor: 'red' }} />
+                {renderCar(myCar)}
             </div>
         </div>
         <div className='road-container road-left'>
             <div className='road'>
-                <div className='car' style={{ backgroundColor: 'red' }} />
+                {renderCar(leftCar)}
             </div>
         </div>
       </div>
