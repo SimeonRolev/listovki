@@ -19,7 +19,41 @@
 .road {
   position: absolute;
   background-color: #666; /* Grey roads */
-  border: 2px solid #333;
+}
+
+/* Add lane markings to show right-side driving */
+.horizontal-road::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    white 0px,
+    white 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  transform: translateY(-50%);
+}
+
+.vertical-road::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    white 0px,
+    white 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  transform: translateX(-50%);
 }
 
 .horizontal-road {
@@ -72,11 +106,32 @@
   justify-content: center;
 }
 
+/* Position cars on the right side of their lane based on travel direction */
+.left-slot {
+  /* Car coming from left (traveling right) - should be on bottom of horizontal road */
+  align-self: flex-end;
+}
+
+.right-slot {
+  /* Car coming from right (traveling left) - should be on top of horizontal road */
+  align-self: flex-start;
+}
+
+.front-slot {
+  /* Car coming from front/top (traveling down) - should be on left side of vertical road */
+  align-self: flex-start;
+}
+
+.me-slot {
+  /* My car coming from bottom (traveling up) - should be on right side of vertical road */
+  align-self: flex-end;
+}
+
 /* Cars */
 .car {
   position: relative;
   width: 30px;
-  height: 20px;
+  height: 60px;
   border-radius: 4px;
   border: 1px solid #000;
   display: flex;
@@ -137,22 +192,7 @@
   transform: rotate(0deg);
 }
 
-/* Specific positioning for slots */
-.left-slot {
-  margin-right: auto;
-}
 
-.right-slot {
-  margin-left: auto;
-}
-
-.front-slot {
-  margin-bottom: auto;
-}
-
-.me-slot {
-  margin-top: auto;
-}
 
 /* Task info */
 .task-info {
@@ -186,20 +226,20 @@
     height: 300px;
   }
   
-  .horizontal-road,
-  .vertical-road,
-  .intersection-center {
-    width: 60px;
-    height: 60px;
-  }
-  
   .horizontal-road {
     height: 60px;
     width: 100%;
+    padding: 0 15px;
   }
   
   .vertical-road {
     width: 60px;
     height: 100%;
+    padding: 15px 0;
+  }
+  
+  .intersection-center {
+    width: 60px;
+    height: 60px;
   }
 }
