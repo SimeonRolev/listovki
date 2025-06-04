@@ -152,10 +152,48 @@
 .turn-indicator {
   position: absolute;
   color: white;
-  font-size: 14px;
+  font-size: 24px;
   font-weight: bold;
-  text-shadow: 1px 1px 1px black;
-  z-index: 1;
+  text-shadow: 2px 2px 2px black;
+  z-index: 15;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  flex-shrink: 0;
+}
+
+/* Position turn indicators around the intersection center relative to car positions */
+.turn-indicator-left {
+  /* Left side of intersection - car approaching from left */
+  left: 0;
+  top: 50%;
+  transform: translateY(0%);
+}
+
+.turn-indicator-right {
+  /* Right side of intersection - car approaching from right */
+  right: 0;
+  top: 50%;
+  transform: translateY(-100%);
+}
+
+.turn-indicator-front {
+  /* Top of intersection - car approaching from front/top */
+  top: 0;
+  left: 50%;
+  transform: translateX(-100%);
+}
+
+.turn-indicator-me {
+  /* Bottom of intersection - my car approaching from bottom */
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(0);
 }
 
 /* Car colors */

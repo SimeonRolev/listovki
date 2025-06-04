@@ -19,11 +19,37 @@ const Crossroads = ({ task }) => {
         title={`${car.color} car going ${car.turn}`}
       >
         <div className="car-body"></div>
-        <div className={`turn-indicator turn-${car.turn}`}>
-          {car.turn === 'left' && '←'}
-          {car.turn === 'right' && '→'}
-          {car.turn === 'straight' && '↑'}
-        </div>
+      </div>
+    );
+  };
+
+  const renderTurnIndicator = (car, position) => {
+    if (!car) return null;
+    
+    const getArrowSymbol = (turn, carPosition) => {
+      if (turn === 'straight') {
+        // Different straight arrows based on car direction
+        switch (carPosition) {
+          case 'left': return '→';
+          case 'right': return '←'; 
+          case 'front': return '↓';
+          case 'me': return '↑';
+          default: return '↑';
+        }
+      } else if (turn === 'left') {
+        return '↶'; // Curved left arrow
+      } else if (turn === 'right') {
+        return '↷'; // Curved right arrow
+      }
+      return '↑';
+    };
+    
+    return (
+      <div 
+        key={`${position}-indicator`}
+        className={`turn-indicator turn-indicator-${position} turn-${car.turn}`}
+      >
+        {getArrowSymbol(car.turn, position)}
       </div>
     );
   };
@@ -58,7 +84,13 @@ const Crossroads = ({ task }) => {
         </div>
         
         {/* Intersection center */}
-        <div className="intersection-center"></div>
+        <div className="intersection-center">
+          {/* Turn indicators positioned in the center */}
+          {renderTurnIndicator(getCarByPosition(Position.LEFT), 'left')}
+          {renderTurnIndicator(getCarByPosition(Position.RIGHT), 'right')}
+          {renderTurnIndicator(getCarByPosition(Position.FRONT), 'front')}
+          {renderTurnIndicator(getCarByPosition(Position.ME), 'me')}
+        </div>
       </div>
       
       {/* Task description */}
