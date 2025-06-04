@@ -12,17 +12,18 @@
     width: 400px;
     height: 400px;
     background-color: lightgreen;
+    position: relative;
 }
 
 .road-container {
     width: 50%;
     height: 50%;
-    position: relative;
+    position: absolute;
 }
 
 .road {
     width: 100px;
-    height: 100%;
+    height: 99%;
     position: absolute;
     right: -50px;
     background-color: grey;

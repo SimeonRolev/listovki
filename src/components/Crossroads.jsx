@@ -4,47 +4,66 @@ import { Position } from '../models/index.js';
 
 const Crossroads = ({ task }) => {
   const myCar = task.getMyCar();
+  const otherCars = task.getOtherCars();
   
-  const renderMyCar = () => {
-    if (!myCar) return null;
+  const renderCar = (car) => {
+    if (!car) return null;
     
     return (
       <div 
-        className={`car car-${myCar.color}`}
-        title={`My ${myCar.color} car going ${myCar.turn}`}
+        className={`car car-${car.color}`}
+        title={`${car.position} ${car.color} car going ${car.turn}`}
       >
         <div className="car-body"></div>
       </div>
     );
   };
 
-  const renderMyTurnIndicator = () => {
-    if (!myCar) return null;
+  const renderMyCar = () => {
+    return renderCar(myCar);
+  };
+
+  const renderTurnIndicator = (car, quadrant) => {
+    if (!car) return null;
     
     return (
-      <div className={`turn-indicator turn-${myCar.turn}`}>
+      <div className={`turn-indicator turn-${car.turn} ${quadrant}`}>
         {/* Arrow shape created with CSS pseudo-elements */}
       </div>
     );
   };
 
+  // Get cars by position
+  const getCarByPosition = (position) => {
+    return otherCars.find(car => car.position === position);
+  };
+
+  const leftCar = getCarByPosition('left');
+  const rightCar = getCarByPosition('right');
+  const frontCar = getCarByPosition('front');
+
   return (
     <div className="crossroads-container">
       <div className="crossroads">
-        {/* Horizontal road */}
-        <div className="road horizontal-road"></div>
-        
-        {/* Vertical road */}
-        <div className="road vertical-road">
-          {/* My car (bottom) */}
-          <div className="car-slot me-slot">
-            {renderMyCar()}
-          </div>
+        <div className='road-container'>
+            <div className='road'>
+                <div className='car' style={{ backgroundColor: 'red' }} />
+            </div>
         </div>
-        
-        {/* Intersection center */}
-        <div className="intersection-center">
-          {renderMyTurnIndicator()}
+        <div className='road-container road-right'>
+            <div className='road'>
+                <div className='car' style={{ backgroundColor: 'red' }} />
+            </div>
+        </div>
+        <div className='road-container road-bottom'>
+            <div className='road'>
+                <div className='car' style={{ backgroundColor: 'red' }} />
+            </div>
+        </div>
+        <div className='road-container road-left'>
+            <div className='road'>
+                <div className='car' style={{ backgroundColor: 'red' }} />
+            </div>
         </div>
       </div>
       
