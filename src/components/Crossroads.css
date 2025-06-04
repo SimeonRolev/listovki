@@ -106,24 +106,9 @@
   justify-content: center;
 }
 
-/* Position cars on the right side of their lane based on travel direction */
-.left-slot {
-  /* Car coming from left (traveling right) - should be on bottom of horizontal road */
-  align-self: flex-end;
-}
-
-.right-slot {
-  /* Car coming from right (traveling left) - should be on top of horizontal road */
-  align-self: flex-start;
-}
-
-.front-slot {
-  /* Car coming from front/top (traveling down) - should be on left side of vertical road */
-  align-self: flex-start;
-}
-
+/* My car positioning - at the bottom of the screen, in the right lane */
 .me-slot {
-  /* My car coming from bottom (traveling up) - should be on right side of vertical road */
+  margin-top: auto;
   align-self: flex-end;
 }
 
@@ -131,7 +116,7 @@
 .car {
   position: relative;
   width: 30px;
-  height: 60px;
+  height: 20px;
   border-radius: 4px;
   border: 1px solid #000;
   display: flex;
@@ -149,51 +134,95 @@
   border-radius: inherit;
 }
 
+/* Turn indicator - positioned in the bottom-right quadrant of intersection */
 .turn-indicator {
   position: absolute;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  text-shadow: 2px 2px 2px black;
   z-index: 15;
   background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 8px;
+  width: 50px;
+  height: 50px;
   border: 2px solid white;
-  flex-shrink: 0;
+  top: 75%;
+  left: 75%;
+  transform: translate(-50%, -50%);
 }
 
-/* Position turn indicators around the intersection center relative to car positions */
-.turn-indicator-left {
-  /* Left side of intersection - car approaching from left */
+/* Straight arrow (pointing up, tail down toward my car) */
+.turn-straight::before {
+  content: '';
+  position: absolute;
+  background-color: white;
+  width: 4px;
+  height: 30px;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.turn-straight::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid white;
+}
+
+/* Left arrow (curved quarter-circle) */
+.turn-left::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 5px;
+  right: 23px;
+  border: 3px solid white;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-radius: 0 20px 0 0;
+}
+
+.turn-left::after {
+  content: '';
+  position: absolute;
+  top: 18px;
   left: 0;
-  top: 50%;
-  transform: translateY(0%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 10px solid white;
 }
 
-.turn-indicator-right {
-  /* Right side of intersection - car approaching from right */
+/* Right arrow (curved quarter-circle) */
+.turn-right::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 5px;
+  left: 23px;
+  border: 3px solid white;
+  border-bottom: transparent;
+  border-right: transparent;
+  border-radius: 20px 0 0 0;
+}
+
+.turn-right::after {
+  content: '';
+  position: absolute;
+  top: 18px;
   right: 0;
-  top: 50%;
-  transform: translateY(-100%);
-}
-
-.turn-indicator-front {
-  /* Top of intersection - car approaching from front/top */
-  top: 0;
-  left: 50%;
-  transform: translateX(-100%);
-}
-
-.turn-indicator-me {
-  /* Bottom of intersection - my car approaching from bottom */
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(0);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 10px solid white;
 }
 
 /* Car colors */
@@ -211,23 +240,6 @@
 
 .car-yellow {
   background-color: #ffff44;
-}
-
-/* Car positioning and rotation */
-.car-position-left {
-  transform: rotate(90deg);
-}
-
-.car-position-right {
-  transform: rotate(-90deg);
-}
-
-.car-position-front {
-  transform: rotate(180deg);
-}
-
-.car-position-me {
-  transform: rotate(0deg);
 }
 
 
