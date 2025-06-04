@@ -7,12 +7,21 @@
 }
 
 .crossroads {
-    background: 'lightgreen'; /* Light green background for grass */
     border: 2px solid #333;
     width: 400px;
     height: 400px;
     background-color: lightgreen;
     position: relative;
+
+    /* Create a perspective view for the crossroads */
+    /* perspective: 800px; */
+    transform: perspective(200px) rotateX(30deg);
+    transform-origin: bottom center;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    /* Make the bottom edge wider to create the illusion of depth */
+    border-radius: 5px 5px 25px 25px;
+    border-bottom-width: 4px;
 }
 
 .road-container {
