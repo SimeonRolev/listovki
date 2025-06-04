@@ -12,11 +12,13 @@ const Crossroads = ({ task }) => {
         return (
             <>
                 <div className='car' style={{ backgroundColor: car.color }} />
-                {car.turn !== Turn.STRAIGHT && (
+                {car.turn !== Turn.STRAIGHT ? (
                     <div
                         className='arrow arrow-left'
                         style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
                     />
+                ) : (
+                    <div className='arrow arrow-straight' />
                 )}
             </>
         );
@@ -39,7 +41,7 @@ const Crossroads = ({ task }) => {
                         {renderCar(myCar)}
                     </div>
                 </div>
-                {/*                 <div className='road-container'>
+                <div className='road-container'>
                     <div className='road'>
                         {renderCar(frontCar)}
                     </div>
@@ -54,7 +56,7 @@ const Crossroads = ({ task }) => {
                     <div className='road'>
                         {renderCar(leftCar)}
                     </div>
-                </div> */}
+                </div>
             </div>
 
             {/* Task description */}
