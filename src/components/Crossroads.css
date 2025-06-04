@@ -64,3 +64,42 @@
     border-radius: 4px;
     border: 2px solid black;   
 }
+
+.car > .arrow {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+}
+
+.arrow {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    bottom: -50px;
+}
+
+.arrow-left::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    border: 3px solid #333;
+    border-right: none;
+    border-top: none;
+    border-radius: 0 0 0 40px;
+    top: 0;
+    left: 20px;
+}
+
+.arrow-left::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 8px solid #333;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    right: 0;
+    bottom: 3px;
+}
