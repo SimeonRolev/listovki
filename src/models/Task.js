@@ -1,5 +1,5 @@
 // Import the Car class and enums from the index file
-import { Car, Position, Turn, Color } from './index.js';
+import { Car, Position, Turn, Color, TrafficSign } from './index.js';
 
 class Task {
     constructor() {
@@ -7,6 +7,9 @@ class Task {
         this.myCar = null;
         this.availableColors = Object.values(Color);
         this.usedColors = new Set();
+        
+        // Initialize signs
+        this.trafficSign = TrafficSign.NONE;
         
         // Always create "my car" at Position.ME
         this.createMyCar();
@@ -69,6 +72,12 @@ class Task {
         return turns[Math.floor(Math.random() * turns.length)];
     }
 
+    generateTrafficSign() {
+        const signs = Object.values(TrafficSign);
+        this.trafficSign = signs[Math.floor(Math.random() * signs.length)];
+        return this.trafficSign;
+    }
+
     getRandomPosition() {
         // Exclude Position.ME as it's reserved for my car
         const availablePositions = [Position.LEFT, Position.RIGHT, Position.FRONT];
@@ -96,11 +105,14 @@ class Task {
                 const position = this.getRandomPosition();
                 const turn = this.getRandomTurn();
                 this.addCar(position, turn);
-            } catch (error) {
+            } catch {
                 // If we can't add more cars (no positions or colors), stop
                 break;
             }
         }
+
+        // Generate signs
+        this.generateTrafficSign();
 
         return this;
     }
@@ -118,6 +130,11 @@ class Task {
     // Get all cars
     getAllCars() {
         return [...this.cars];
+    }
+
+    // Get traffic sign
+    getTrafficSign() {
+        return this.trafficSign;
     }
 
     // Get task description

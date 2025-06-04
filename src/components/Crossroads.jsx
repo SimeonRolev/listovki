@@ -1,6 +1,6 @@
 import React from 'react';
 import './Crossroads.css';
-import { Position, Turn } from '../models/index.js';
+import { Turn, TrafficSign } from '../models/index.js';
 
 const Crossroads = ({ task }) => {
     const myCar = task.getMyCar();
@@ -24,6 +24,14 @@ const Crossroads = ({ task }) => {
         );
     };
 
+    const renderTrafficSign = (sign) => {
+        if (sign === TrafficSign.NONE) return null;
+
+        return (
+            <div className={"traffic-sign traffic-sign-" + sign} />
+        );
+    };
+
     // Get cars by position
     const getCarByPosition = (position) => {
         return otherCars.find(car => car.position === position);
@@ -39,6 +47,7 @@ const Crossroads = ({ task }) => {
                 <div className='road-container road-bottom'>
                     <div className='road'>
                         {renderCar(myCar)}
+                        {renderTrafficSign(task.getTrafficSign())}
                     </div>
                 </div>
                 <div className='road-container'>

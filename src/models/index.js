@@ -21,6 +21,15 @@ const Color = {
     YELLOW: 'yellow',
 }
 
+// Enum for traffic signs
+const TrafficSign = {
+    RIGHT_OF_WAY: 'right-of-way',
+    GIVE_WAY: 'give-way',
+    STOP: 'stop',
+    NONE: 'none'
+};
+
+
 class Car {
     constructor(position = Position.ME, turn = Turn.STRAIGHT, color) {
         this.position = position; // Position of the car
@@ -30,4 +39,4 @@ class Car {
 }
 
 // Export all classes and enums
-export { Car, Position, Turn, Color };
+export { Car, Position, Turn, Color, TrafficSign };
