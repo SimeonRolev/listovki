@@ -1,0 +1,205 @@
+.crossroads-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.crossroads {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background-color: #90EE90; /* Light green background for grass */
+  border: 2px solid #333;
+  margin-bottom: 20px;
+}
+
+/* Roads */
+.road {
+  position: absolute;
+  background-color: #666; /* Grey roads */
+  border: 2px solid #333;
+}
+
+.horizontal-road {
+  width: 100%;
+  height: 80px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.vertical-road {
+  width: 80px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+/* Intersection center */
+.intersection-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-color: #666;
+  border: 2px solid #333;
+  z-index: 10;
+}
+
+/* Car slots */
+.car-slot {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cars */
+.car {
+  position: relative;
+  width: 30px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.car-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.turn-indicator {
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px black;
+  z-index: 1;
+}
+
+/* Car colors */
+.car-red {
+  background-color: #ff4444;
+}
+
+.car-blue {
+  background-color: #4444ff;
+}
+
+.car-green {
+  background-color: #44ff44;
+}
+
+.car-yellow {
+  background-color: #ffff44;
+}
+
+/* Car positioning and rotation */
+.car-position-left {
+  transform: rotate(90deg);
+}
+
+.car-position-right {
+  transform: rotate(-90deg);
+}
+
+.car-position-front {
+  transform: rotate(180deg);
+}
+
+.car-position-me {
+  transform: rotate(0deg);
+}
+
+/* Specific positioning for slots */
+.left-slot {
+  margin-right: auto;
+}
+
+.right-slot {
+  margin-left: auto;
+}
+
+.front-slot {
+  margin-bottom: auto;
+}
+
+.me-slot {
+  margin-top: auto;
+}
+
+/* Task info */
+.task-info {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.task-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.task-info pre {
+  margin: 0;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .crossroads {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .horizontal-road,
+  .vertical-road,
+  .intersection-center {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .horizontal-road {
+    height: 60px;
+    width: 100%;
+  }
+  
+  .vertical-road {
+    width: 60px;
+    height: 100%;
+  }
+}
