@@ -56,67 +56,74 @@ class Solution {
             })
             .sort((a, b) => {
                 console.log('Comparing:', a, b);
-            // If one has priority over the other, it goes first
-            if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
-            if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;
+                // If one has priority over the other, it goes first
+                if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
+                if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;
 
-            const positionSet = new Set([a.position, b.position]);
-            const opposite =
-                (positionSet.has(Position.EAST) && positionSet.has(Position.WEST)) ||
-                (positionSet.has(Position.NORTH) && positionSet.has(Position.SOUTH));
-            const neighbouring = !opposite;
+                const positionSet = new Set([a.position, b.position]);
+                const opposite =
+                    (positionSet.has(Position.EAST) && positionSet.has(Position.WEST)) ||
+                    (positionSet.has(Position.NORTH) && positionSet.has(Position.SOUTH));
+                const neighbouring = !opposite;
 
-            if (neighbouring) {
-                if (getRightStandingPosition(a.position) === b.position) {
-                    // B sits right of A => B Wins
-                    b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
-                    return 1;
-                }
-
-                if (getRightStandingPosition(b.position) === a.position) {
-                    // A sits right of B => A Wins
-                    a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
-                    return -1;
-                }
-            } else {
-                if (getOppositeStandingPosition(a.position) === b.position) {
-                    if (a.turn === 'left' && b.turn === 'left') {
-                        return 0;
-                    }
-    
-                    if (a.turn === 'left') {
-                        // B wins
-                        a.reason = 'Завива наляво => чака';
+                if (neighbouring) {
+                    if (getRightStandingPosition(a.position) === b.position) {
+                        // B sits right of A => B Wins
+                        b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
                         return 1;
                     }
-                    if (b.turn === 'left') {
-                        // A wins
-                        b.reason = 'Завива наляво => чака';
+
+                    if (getRightStandingPosition(b.position) === a.position) {
+                        // A sits right of B => A Wins
+                        a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
                         return -1;
                     }
+                } else {
+                    if (getOppositeStandingPosition(a.position) === b.position) {
+                        if (a.turn === 'left' && b.turn === 'left') {
+                            return 0;
+                        }
+
+                        if (a.turn === 'left') {
+                            // B wins
+                            a.reason = 'Завива наляво => чака';
+                            return 1;
+                        }
+                        if (b.turn === 'left') {
+                            // A wins
+                            b.reason = 'Завива наляво => чака';
+                            return -1;
+                        }
+                    }
                 }
-            }
 
-            a.equals.add(b);
-            b.equals.add(a);
+                a.equals.add(b);
+                b.equals.add(a);
 
-            return 0;
-        }).reduce((acc, car) => {
-            // Check if car is already in accumulator with equal 'equals' set
-            const existingCar = acc.find(existingCar => 
-                areSetsEqual(existingCar.equals, car.equals)
-            );
+                return 0;
+            }).reduce((acc, car) => {
+                // Check if car is already in accumulator with equal 'equals' set
+                const existingCar = acc.find(existingCar =>
+                    areSetsEqual(existingCar.equals, car.equals)
+                );
 
-            // Only add the car if there's no car with the same equals set
-            if (!existingCar) {
-                acc.push(car);
-            }
+                // Only add the car if there's no car with the same equals set
+                if (!existingCar) {
+                    acc.push(car);
+                }
 
+                return acc;
+            }, [])
+
+        const [priorityRoadCars, nonPriorityRoadCars] = sortedCars.reduce((acc, car) => {
+            acc[this.onPriorityRoad(car) ? 0 : 1].push(car)
             return acc;
-        }, [])
+        }, [[], []]);
 
         return {
-            sortedCars
+            sortedCars,
+            priorityRoadCars,
+            nonPriorityRoadCars,
         };
     }
 }
