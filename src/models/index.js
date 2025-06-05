@@ -1,10 +1,10 @@
 
-// Enum for position - left, right, front
+// Enum for position - east, west, north, south
 const Position = {
-    LEFT: 'left',
-    RIGHT: 'right',
-    FRONT: 'front',
-    ME: 'me'
+    EAST: 'east',
+    WEST: 'west',
+    NORTH: 'north',
+    SOUTH: 'south'
 };
 
 // Enum for turn - left, right
@@ -37,7 +37,7 @@ const DirectionSign = {
 }
 
 class Car {
-    constructor(position = Position.ME, turn = Turn.STRAIGHT, color) {
+    constructor(position = Position.SOUTH, turn = Turn.STRAIGHT, color) {
         this.position = position; // Position of the car
         this.turn = turn; // Direction the car is turning
         this.color = color; // Color of the car

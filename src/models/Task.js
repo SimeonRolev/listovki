@@ -12,22 +12,22 @@ class Task {
         this.trafficSign = TrafficSign.NONE;
         this.directionSign = null;
         
-        // Always create "my car" at Position.ME
+        // Always create "my car" at Position.SOUTH
         this.createMyCar();
     }
 
     createMyCar() {
-        // My car is always at Position.ME
+        // My car is always at Position.SOUTH
         const color = this.getRandomAvailableColor();
         const turn = this.getRandomTurn();
-        this.myCar = new Car(Position.ME, turn, color);
+        this.myCar = new Car(Position.SOUTH, turn, color);
         this.cars.push(this.myCar);
     }
 
     addCar(position, turn, color = null) {
-        // Validate position (cannot be ME as that's reserved for my car)
-        if (position === Position.ME) {
-            throw new Error("Position.ME is reserved for my car");
+        // Validate position (cannot be SOUTH as that's reserved for my car)
+        if (position === Position.SOUTH) {
+            throw new Error("Position.SOUTH is reserved for my car");
         }
 
         // Validate we don't exceed 3 cars total (including my car)
@@ -96,8 +96,8 @@ class Task {
     }
 
     getRandomPosition() {
-        // Exclude Position.ME as it's reserved for my car
-        const availablePositions = [Position.LEFT, Position.RIGHT, Position.FRONT];
+        // Exclude Position.SOUTH as it's reserved for my car
+        const availablePositions = [Position.EAST, Position.WEST, Position.NORTH];
         const occupiedPositions = this.cars.map(car => car.position);
         const freePositions = availablePositions.filter(pos => !occupiedPositions.includes(pos));
         

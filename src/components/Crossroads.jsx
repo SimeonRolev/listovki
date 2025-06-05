@@ -1,6 +1,6 @@
 import React from 'react';
 import './Crossroads.css';
-import { Turn, TrafficSign, DirectionSign } from '../models/index.js';
+import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
 
 const Crossroads = ({ task }) => {
     const myCar = task.myCar;
@@ -11,7 +11,11 @@ const Crossroads = ({ task }) => {
 
         return (
             <>
-                <div className='car' style={{ backgroundColor: car.color }} />
+                <div className='car' style={{ backgroundColor: car.color }}>
+                    <span style={{ color: 'black' }}>
+                        {car.position}
+                    </span>
+                </div>
                 {car.turn !== Turn.STRAIGHT ? (
                     <div
                         className='arrow arrow-left'
@@ -57,14 +61,14 @@ const Crossroads = ({ task }) => {
     };
 
     // Get cars by position for direct access
-    const leftCar = otherCars.find(car => car.position === 'left');
-    const rightCar = otherCars.find(car => car.position === 'right');
-    const frontCar = otherCars.find(car => car.position === 'front');
+    const eastCar = otherCars.find(car => car.position === Position.EAST);
+    const westCar = otherCars.find(car => car.position === Position.WEST);
+    const northCar = otherCars.find(car => car.position === Position.NORTH);
 
     return (
         <div className="crossroads-container">
             <div className="crossroads">
-                <div className='road-container road-bottom'>
+                <div className='road-container road-south'>
                     <div className='road'>
                         {renderCar(myCar)}
                         {renderTrafficSign(task.trafficSign)}
@@ -73,18 +77,18 @@ const Crossroads = ({ task }) => {
                 </div>
                 <div className='road-container'>
                     <div className='road'>
-                        {renderCar(frontCar)}
+                        {renderCar(northCar)}
                     </div>
                 </div>
-                <div className='road-container road-right'>
+                <div className='road-container road-west'>
                     <div className='road'>
-                        {renderCar(rightCar)}
+                        {renderCar(westCar)}
                     </div>
                 </div>
                 
-                <div className='road-container road-left'>
+                <div className='road-container road-east'>
                     <div className='road'>
-                        {renderCar(leftCar)}
+                        {renderCar(eastCar)}
                     </div>
                 </div>
             </div>
