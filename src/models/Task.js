@@ -134,38 +134,9 @@ class Task {
         return this;
     }
 
-    // Get all cars except my car
-    getOtherCars() {
-        return this.cars.filter(car => car.position !== Position.ME);
-    }
 
-    // Get my car
-    getMyCar() {
-        return this.myCar;
-    }
 
-    // Get all cars
-    getAllCars() {
-        return [...this.cars];
-    }
 
-    // Get traffic sign
-    getTrafficSign() {
-        return this.trafficSign;
-    }
-
-    getDirectionSign() {
-        return this.directionSign;
-    }
-
-    // Get task description
-    getDescription() {
-        const descriptions = this.cars.map(car => {
-            const positionName = car.position === Position.ME ? 'My car' : `${car.position} car`;
-            return `${positionName}: ${car.color}, going ${car.turn}`;
-        });
-        return descriptions.join('\n');
-    }
 }
 
 export default Task;
