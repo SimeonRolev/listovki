@@ -13,6 +13,7 @@
     background-color: lightgreen;
     position: relative;
 
+    margin-top: -40%;
     /* Create a perspective view for the crossroads */
     /* perspective: 800px; */
     transform: perspective(200px) rotateX(15deg);
@@ -69,19 +70,21 @@
     }
 }
 
-.road .car {
-    width: 40%;
-    height: 40%;
+.road-container .car {
+    width: 16%;
+    height: 30%;
     position: absolute;
-    left: 4%;
-    top: 2%;
+    right: 0;
+    top: 0;
+    margin: 1%;
+    z-index: 2;
 }
 
 .car {
     width: 50px;
     height: 30px;
     border-radius: 4px;
-    border: 2px solid black;   
+    border: 3px solid black;   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,9 +97,10 @@
     transform: translateY(-50%);
 }
 
-.car > .explanation {
+.explanation {
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
 }
 
 .explanation-item {
@@ -112,75 +116,41 @@
 
 .arrow {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    bottom: -50px;
-    z-index: 1;
-}
-
-.arrow-left::before {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 25px;
-    border: 8px solid #333;
-    border-right: none;
-    border-top: none;
-    border-radius: 0 0 0 40px;
-    top: 0;
-    left: 20px;
-}
-
-.arrow-left::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 8px solid #333;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
-    right: 8px;
-    bottom: 6px;
-}
-
-.arrow-straight::before {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 30px;
-    border-left: 8px solid #333;
-    border-radius: 0;
-    top: 0;
-    left: 20px;
-}
-
-.arrow-straight::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 8px solid #333;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
-    right: 21px;
+    width: 20%;
+    height: 20%;
     bottom: 0;
-    transform: rotate(90deg);
+    right: 0;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotate(180deg);
+}
+
+.arrow-right {
+    background-image: url('arrow-turn-right.svg');
+}
+
+.arrow-left {
+    background-image: url('arrow-turn-right.svg');
+    transform: rotate(180deg) scale(-1, 1);
+}
+
+.arrow-straight {
+    background-image: url('arrow-straight.svg');
 }
 
 .sign {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    left: -40px;
+    width: 16%;
+    height: 16%;
+    z-index: 5;
+    bottom: 20%;
+    right: 20%;
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     transform: rotate(180deg);
-}
-
-.traffic-sign {
-    bottom: 0;
-    left: -40px;
 }
 
 .traffic-sign-stop {
@@ -199,7 +169,7 @@
 }
 
 .direction-sign {
-    bottom: 40px;
+    bottom: 36%;
     background-image: url('direction-sign-se.png');
     clip-path: inset(0 4% 0 0);
 }

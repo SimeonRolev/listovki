@@ -3,24 +3,27 @@ import './Crossroads.css';
 import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
 import Solution from '../models/Solution.js';
 
-const Car = ({ car, turnArrows }) => {
+const Arrow = ({ turn }) => !turn ? null : <div className={`arrow arrow-${turn}`} />
+
+const Car = ({ car }) => {
     if (!car) return null;
     return (
-        <>
-            <div
-                className='car'
-                style={{ backgroundColor: car.color }}
-            />
-            {turnArrows && (
-                car.turn === Turn.STRAIGHT
-                    ? <div className='arrow arrow-straight' />
-                    : <div
-                        className='arrow arrow-left'
-                        style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
-                    />
-            )}
-        </>
+        <div
+            className='car'
+            style={{ backgroundColor: car.color }}
+        />
     );
+}
+
+const Road = ({ position, car, children }) => {
+    return (
+        <div className={`road-container road-${position}`}>
+            {car && <Arrow turn={car.turn} />}
+            {car && <Car car={car} />}
+            <div className='road' />
+            {children}
+        </div>
+    )
 }
 
 const Crossroads = ({ task }) => {
@@ -46,7 +49,6 @@ const Crossroads = ({ task }) => {
 
         return (
             <>
-                {/* {directionSign.directions} */}
                 <img
                     src='/direction-sign-se.png'
                     alt='Direction Sign South East'
@@ -72,29 +74,13 @@ const Crossroads = ({ task }) => {
     return (
         <div className="crossroads-container">
             <div className="crossroads">
-                <div className='road-container road-south'>
-                    <div className='road'>
-                        <Car car={myCar}  turnArrows={true} />
-                        {renderTrafficSign(task.trafficSign)}
-                        {renderDirectionSign(task.directionSign)}
-                    </div>
-                </div>
-                <div className='road-container'>
-                    <div className='road'>
-                        <Car car={northCar}  turnArrows={true} />
-                    </div>
-                </div>
-                <div className='road-container road-west'>
-                    <div className='road'>
-                        <Car car={westCar}  turnArrows={true} />
-                    </div>
-                </div>
-
-                <div className='road-container road-east'>
-                    <div className='road'>
-                        <Car car={eastCar}  turnArrows={true} />
-                    </div>
-                </div>
+                <Road position={Position.SOUTH} car={myCar}>
+                    {renderTrafficSign(task.trafficSign)}
+                    {renderDirectionSign(task.directionSign)}
+                </Road>
+                <Road position={Position.NORTH} car={northCar} />
+                <Road position={Position.WEST} car={westCar} />
+                <Road position={Position.EAST} car={eastCar} />
             </div>
             <div className='explanation'>
                 {
