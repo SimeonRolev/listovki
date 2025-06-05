@@ -6,6 +6,7 @@ import Solution from './Solution.jsx';
 import Test from './Test.jsx';
 import Arrow from './Arrow.jsx';
 import Car from './Car.jsx';
+import TestPriorityOrder from './TestPriorityOrder.jsx';
 
 const Road = ({ position, car, children }) => {
     return (
@@ -79,7 +80,8 @@ const Crossroads = ({ task }) => {
                 />
             )}
             {!showSolution && (
-                <Test solution={solution} />
+                <TestPriorityOrder solution={solution} />
+                // <Test solution={solution} />
             )}
         </div>
     );

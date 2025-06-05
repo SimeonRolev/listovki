@@ -23,7 +23,7 @@ const TestPriorityWeak = ({ solution, onSuccess }) => {
             selectedCars.size === priorityRoadCars.length;
         setCheckPriorityError(result ? 'Правилно!' : 'Грешка: Неправилно избрани коли с предимство!');
         if (result) {
-            onSuccess();
+            onSuccess?.();
         }
     }
 
