@@ -1,4 +1,4 @@
-import { TrafficSign, Position, getRightStandingPosition, getOppositeStandingPosition } from './index.js';
+import { TrafficSign, Position, getRightStandingPosition, getOppositeStandingPosition, t } from './index.js';
 
 /**
  * Compares two sets for equality.
@@ -19,7 +19,7 @@ class Solution {
         this.task = task;
     }
 
-    hasRightOfWay(car) {
+    onPriorityRoad(car) {
         if (this.task.trafficSign === TrafficSign.NONE) return false;
         if (this.task.directionSign.directions) {
             return this.task.directionSign.directions.includes(car.position);
@@ -50,18 +50,18 @@ class Solution {
             })
             .sort((a, b) => {
             // If one has priority over the other, it goes first
-            if (this.hasRightOfWay(a) && !this.hasRightOfWay(b)) return -1;
-            if (!this.hasRightOfWay(a) && this.hasRightOfWay(b)) return 1;
+            if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
+            if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;
 
             if (getRightStandingPosition(a.position) === b.position) {
                 // B sits right of A => B Wins
-                b.reason = `Right of ${a.color}`;
+                b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
                 return 1;
             }
 
             if (getRightStandingPosition(b.position) === a.position) {
                 // A sits right of B => A Wins
-                a.reason = `Right of ${b.color}`;
+                a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
                 return -1;
             }
 
@@ -72,12 +72,12 @@ class Solution {
 
                 if (a.turn === 'left') {
                     // B wins
-                    a.reason = 'Left turn waits';
+                    a.reason = 'Завива наляво => чака';
                     return 1;
                 }
                 if (b.turn === 'left') {
                     // A wins
-                    b.reason = 'Left turn waits';
+                    b.reason = 'Завива наляво => чака';
                     return -1;
                 }
             }

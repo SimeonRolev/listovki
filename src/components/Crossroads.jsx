@@ -30,6 +30,10 @@ const Crossroads = ({ task }) => {
     const otherCars = task.cars.filter(car => car.position !== 'me');
     const solution = new Solution(task);
     const { sortedCars } = solution.getOrder();
+    const [priorityRoadCars, nonPriorityRoadCars] = sortedCars.reduce((acc, car) => {
+        acc[solution.onPriorityRoad(car) ? 0 : 1].push(car)
+        return acc;
+    }, [[], []]);
 
     const renderTrafficSign = (sign) => {
         if (sign === TrafficSign.NONE) return null;
@@ -95,13 +99,23 @@ const Crossroads = ({ task }) => {
                 </div>
             </div>
             <div className='explanation'>
-                {sortedCars.map((car, index) => (
+                {priorityRoadCars.length > 0 && <h3 style={{ marginBottom: 0 }}>Път с предимство:</h3>}
+                {priorityRoadCars.map((car, index) => (
                     <div key={index} className='explanation-item'>
+                        <b style={{ marginRight: 10 }}>{priorityRoadCars.length + index + 1} - </b>
                         {[...car.equals].map(c => <Car car={c} />)}
                         <div class='explanation-text'>
-                            <div>Order: {index + 1}</div>
-                            <div>Priority road: {solution.hasRightOfWay(car) ? 'true' : 'false'} </div>
-                            {car.reason && <div>More: {car.reason}</div>}
+                            {car.reason && <div>{car.reason}</div>}
+                        </div>
+                    </div>
+                ))}
+                {nonPriorityRoadCars.length > 0 && <h3 style={{ marginBottom: 0 }}>Път без предимство:</h3>}
+                {nonPriorityRoadCars.map((car, index) => (
+                    <div key={index} className='explanation-item'>
+                        <b style={{ marginRight: 10 }}>{priorityRoadCars.length + index + 1} - </b>
+                        {[...car.equals].map(c => <Car car={c} />)}
+                        <div class='explanation-text'>
+                            {car.reason && <div>{car.reason}</div>}
                         </div>
                     </div>
                 ))}

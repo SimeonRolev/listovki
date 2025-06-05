@@ -51,6 +51,35 @@ const Color = {
     YELLOW: 'yellow',
 }
 
+export function t (value) {
+    switch (value) {
+        case Position.EAST:
+            return 'Изток';
+        case Position.WEST:
+            return 'Запад';
+        case Position.NORTH:
+            return 'Север';
+        case Position.SOUTH:
+            return 'Юг';
+        case Turn.LEFT:
+            return 'Наляво';
+        case Turn.RIGHT:
+            return 'Надясно';
+        case Turn.STRAIGHT:
+            return 'Направо';
+        case Color.RED:
+            return 'Червен';
+        case Color.BLUE:
+            return 'Син';
+        case Color.GREEN:
+            return 'Зелен';
+        case Color.YELLOW:
+            return 'Жълт';
+        default:
+            return value;
+    }
+}
+
 // Enum for traffic signs
 const TrafficSign = {
     RIGHT_OF_WAY: 'right-of-way',
