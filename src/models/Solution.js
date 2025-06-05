@@ -7,7 +7,7 @@ class Solution {
 
     hasRightOfWay (car) {
         if (this.task.trafficSign === TrafficSign.NONE) return false;
-        if (this.task.directionSign) {
+        if (this.task.directionSign.directions) {
             return this.task.directionSign.directions.includes(car.position);
         } else {
             // No direction sign

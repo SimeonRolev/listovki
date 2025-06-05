@@ -45,13 +45,24 @@ class Car {
 }
 
 class WayDirectionSign {
-    constructor(iHaveWay = null) {
-        this.iHaveWay = iHaveWay; // Indicates if the car has the right of way
-        this.directions = iHaveWay === true
-            ? Math.random() < 0.5 ? DirectionSign.SW : DirectionSign.SE
-            : iHaveWay === false
-                ? Math.random() < 0.5 ? DirectionSign.NW : DirectionSign.NE
-                : null
+    constructor({trafficSign = TrafficSign.NONE} = {}) {
+        if (
+            trafficSign === TrafficSign.NONE ||
+            Math.random() < 0.5 // 50% chance of no direction sign
+        ) {
+            this.directions = null;
+            return;
+        }
+
+        if (trafficSign === TrafficSign.RIGHT_OF_WAY) {
+            this.directions = Math.random() < 0.5 ? DirectionSign.SW : DirectionSign.SE
+            return;
+        }
+
+        if (trafficSign === TrafficSign.GIVE_WAY || trafficSign === TrafficSign.STOP) {
+            this.directions = Math.random() < 0.5 ? DirectionSign.NW : DirectionSign.NE
+            return;
+        }
     }
 }
 

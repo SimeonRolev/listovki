@@ -45,7 +45,7 @@ const Crossroads = ({ task }) => {
     };
 
     const renderDirectionSign = (directionSign) => {
-        if (!directionSign) return null;
+        if (!directionSign.directions) return null;
 
         return (
             <>

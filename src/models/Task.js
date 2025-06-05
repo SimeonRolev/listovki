@@ -84,14 +84,7 @@ class Task {
     }
 
     generateDirectionSign() {
-        if (this.trafficSign === TrafficSign.NONE) {
-            this.directionSign = null;
-            return null;
-        }
-    
-        const iHaveWay = this.trafficSign === TrafficSign.RIGHT_OF_WAY ? true : 
-                        this.trafficSign === TrafficSign.NONE ? null : false;
-        this.directionSign = new WayDirectionSign(iHaveWay);
+        this.directionSign = new WayDirectionSign({trafficSign: this.trafficSign});
         return this.directionSign;
     }
 
