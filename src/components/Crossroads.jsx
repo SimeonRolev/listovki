@@ -90,7 +90,7 @@ const Crossroads = ({ task }) => {
                 }
                 {priorityRoadCars.map((car, index) => (
                     <div key={index} className='explanation-item'>
-                        <b style={{ marginRight: 10 }}>{priorityRoadCars.length + index + 1} - </b>
+                        <b style={{ marginRight: 10 }}>{index + 1} - </b>
                         {[...car.equals].map(c => <Car car={c} />)}
                         <div class='explanation-text'>
                             {car.reason && <div style={{ marginLeft: 10 }}>{car.reason}</div>}
