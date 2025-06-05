@@ -28,38 +28,55 @@ class Solution {
         2 confronting cars, both taking a left turn => both should wait => conflict
     */
     getOrder() {
-        const sortedCars = this.task.cars.slice().sort((a, b) => {
+        const sortedCars = this.task.cars
+            .slice()
+            .map(car => {
+                car.equals = new Set([car]);
+                return car;
+            })
+            .sort((a, b) => {
             // If one has priority over the other, it goes first
             if (this.hasRightOfWay(a) && !this.hasRightOfWay(b)) return -1;
             if (!this.hasRightOfWay(a) && this.hasRightOfWay(b)) return 1;
 
             if (getRightStandingPosition(a.position) === b.position) {
                 // B sits right of A => B Wins
+                b.reason = `Right of ${a.color}`;
                 return 1;
             }
 
             if (getRightStandingPosition(b.position) === a.position) {
                 // A sits right of B => A Wins
+                a.reason = `Right of ${b.color}`;
                 return -1;
             }
 
             if (getOppositeStandingPosition(a.position) === b.position) {
                 if (a.turn === 'left' && b.turn === 'left') {
-                    throw new Error("Conflict: both cars cannot turn left at the same time");
+                    return 0;
                 }
 
                 if (a.turn === 'left') {
                     // B wins
+                    a.reason = 'Left turn waits';
                     return 1;
                 }
                 if (b.turn === 'left') {
                     // A wins
+                    b.reason = 'Left turn waits';
                     return -1;
                 }
             }
-        });
 
-        return sortedCars;
+            a.equals.add(b);
+            b.equals.add(a);
+
+            return 0;
+        })
+
+        return {
+            sortedCars
+        };
     }
 }
 

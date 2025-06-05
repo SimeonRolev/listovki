@@ -3,44 +3,33 @@ import './Crossroads.css';
 import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
 import Solution from '../models/Solution.js';
 
+const Car = ({ car }) => {
+    if (!car) return null;
+    return (
+        <>
+            <div
+                className='car'
+                style={{
+                    backgroundColor: car.color
+                }}
+            />
+            {car.turn !== Turn.STRAIGHT ? (
+                <div
+                    className='arrow arrow-left'
+                    style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
+                />
+            ) : (
+                <div className='arrow arrow-straight' />
+            )}
+        </>
+    );
+}
+
 const Crossroads = ({ task }) => {
     const myCar = task.myCar;
     const otherCars = task.cars.filter(car => car.position !== 'me');
     const solution = new Solution(task);
-    const orderedCars = solution.getOrder().map(car => car.color);
-
-    const renderCar = (car) => {
-        if (!car) return null;
-
-        return (
-            <>
-                <div
-                    className='car'
-                    style={{
-                        backgroundColor: car.color,
-                        // border: solution.hasRightOfWay(car) ? ' px solid green' : ''
-                    }}
-                >
-                    <div
-                        className='right-of-way'
-                        style={{
-                            backgroundColor: solution.hasRightOfWay(car) ? 'green' : 'red',
-                        }}
-                    >
-                        {orderedCars.indexOf(car.color) + 1}
-                    </div>
-                </div>
-                {car.turn !== Turn.STRAIGHT ? (
-                    <div
-                        className='arrow arrow-left'
-                        style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
-                    />
-                ) : (
-                    <div className='arrow arrow-straight' />
-                )}
-            </>
-        );
-    };
+    const { sortedCars } = solution.getOrder();
 
     const renderTrafficSign = (sign) => {
         if (sign === TrafficSign.NONE) return null;
@@ -62,10 +51,10 @@ const Crossroads = ({ task }) => {
                     className={`sign direction-sign`}
                     style={{
                         transform: `rotate(${directionSign.directions === DirectionSign.NW ? 0 :
-                                directionSign.directions === DirectionSign.NE ? 90 :
-                                    directionSign.directions === DirectionSign.SW ? 270 :
-                                        directionSign.directions === DirectionSign.SE ? 180 :
-                                            0
+                            directionSign.directions === DirectionSign.NE ? 90 :
+                                directionSign.directions === DirectionSign.SW ? 270 :
+                                    directionSign.directions === DirectionSign.SE ? 180 :
+                                        0
                             }deg)`,
                     }}
                 />
@@ -83,27 +72,39 @@ const Crossroads = ({ task }) => {
             <div className="crossroads">
                 <div className='road-container road-south'>
                     <div className='road'>
-                        {renderCar(myCar)}
+                        <Car car={myCar} />
                         {renderTrafficSign(task.trafficSign)}
                         {renderDirectionSign(task.directionSign)}
                     </div>
                 </div>
                 <div className='road-container'>
                     <div className='road'>
-                        {renderCar(northCar)}
+                        <Car car={northCar} />
                     </div>
                 </div>
                 <div className='road-container road-west'>
                     <div className='road'>
-                        {renderCar(westCar)}
+                        <Car car={westCar} />
                     </div>
                 </div>
 
                 <div className='road-container road-east'>
                     <div className='road'>
-                        {renderCar(eastCar)}
+                        <Car car={eastCar} />
                     </div>
                 </div>
+            </div>
+            <div className='explanation'>
+                {sortedCars.map((car, index) => (
+                    <div key={index} className='explanation-item'>
+                        {[...car.equals].map(c => <Car car={c} />)}
+                        <div class='explanation-text'>
+                            <div>Order: {index + 1}</div>
+                            <div>Priority road: {solution.hasRightOfWay(car) ? 'true' : 'false'} </div>
+                            {car.reason && <div>More: {car.reason}</div>}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
