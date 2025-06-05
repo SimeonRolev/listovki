@@ -1,5 +1,6 @@
 // Import the Car class and enums from the index file
 import { Car, Position, Turn, Color, TrafficSign, WayDirectionSign } from './index.js';
+import Solution from './Solution.js';
 
 class Task {
     constructor() {
@@ -124,18 +125,16 @@ class Task {
         // Generate signs (traffic sign will automatically generate direction sign)
         this.generateTrafficSign();
 
-        // If we have 4 cars and traffic sign is NONE, regenerate the task
-        // This avoids ambiguous scenarios where right-of-way rules can't be applied
-        if (this.cars.length === 4 && this.trafficSign === TrafficSign.NONE) {
-            return this.generateRandomTask();
+        try {
+            this.solution = new Solution(this);
+            this.solution.solve();
+        } catch (error) {
+            console.error("Error generating solution:", error);
+            return this.generateRandomTask(); // Retry if there's an error
         }
 
         return this;
     }
-
-
-
-
 }
 
 export default Task;

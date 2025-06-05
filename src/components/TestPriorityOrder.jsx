@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Car from './Car.jsx';
+import { t } from '../models/index.js';
 
-const TestPriorityOrder = ({ solution, onSuccess }) => {
-    const task = solution.task;
+const TestPriorityOrder = ({ task, onSuccess }) => {
+    const solution = task.solution;
     const [clickedOrder, setClickedOrder] = useState([]);
     const [checkOrderError, setCheckOrderError] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -26,7 +27,7 @@ const TestPriorityOrder = ({ solution, onSuccess }) => {
     };
 
     const checkOrder = (orderToCheck = clickedOrder) => {
-        const { sortedCars } = solution.getOrder();
+        const { sortedCars } = solution.solve();
         const correctOrder = sortedCars.map(car => car.color);
         
         const isCorrect = 
@@ -37,7 +38,7 @@ const TestPriorityOrder = ({ solution, onSuccess }) => {
         setIsCompleted(true);
         
         if (isCorrect) {
-            onSuccess();
+            onSuccess?.();
         }
     };
 
@@ -48,7 +49,7 @@ const TestPriorityOrder = ({ solution, onSuccess }) => {
 
     return (
         <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <h2>Кликнете колите в реда, в който трябва да минат</h2>
+            <h2>Кликнете автомобилите в реда, в който трябва да минат</h2>
             
             <div style={{ 
                 display: 'grid', 
@@ -95,7 +96,7 @@ const TestPriorityOrder = ({ solution, onSuccess }) => {
                                 </div>
                             )}
                             <div style={{ marginTop: '5px', textAlign: 'center' }}>
-                                {car.color}
+                                {t(car.color)}
                             </div>
                         </div>
                     );

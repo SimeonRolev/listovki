@@ -35,13 +35,11 @@ class Solution {
         }
     }
 
-    /* 
-        Edge cases:
-        4 cars, no signs => all should comply to the right-standing rule => loop
-        2 or more cars not interfering in any way => id (ex, 2 facing cars, none gets a left turn). Is that even an issue? Still priorities work the same
-        2 confronting cars, both taking a left turn => both should wait => conflict
-    */
-    getOrder() {
+    solve () {
+        if (this.task.cars.length === 4 && this.task.trafficSign === TrafficSign.NONE) {
+            throw new Error('Cannot determine order with 4 cars and no traffic sign - right-standing loop.');
+        }
+
         const sortedCars = this.task.cars
             .slice()
             .map(car => {
@@ -80,7 +78,7 @@ class Solution {
                 } else {
                     if (getOppositeStandingPosition(a.position) === b.position) {
                         if (a.turn === 'left' && b.turn === 'left') {
-                            return 0;
+                            throw new Error('Both cars cannot turn left at the same time when facing each other and have the same priority.');
                         }
 
                         if (a.turn === 'left') {
