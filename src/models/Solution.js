@@ -55,7 +55,6 @@ class Solution {
                 if (!aHasRightStanding && bHasRightStanding) return 1;
             })
             .sort((a, b) => {
-                console.log('Comparing:', a, b);
                 // If one has priority over the other, it goes first
                 if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
                 if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;

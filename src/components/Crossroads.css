@@ -173,3 +173,14 @@
     background-image: url('direction-sign-se.png');
     clip-path: inset(0 4% 0 0);
 }
+
+.test-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    input[type="checkbox"] {
+        width: 30px;
+        height: 30px;
+    }
+}

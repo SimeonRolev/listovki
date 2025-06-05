@@ -3,18 +3,9 @@ import './Crossroads.css';
 import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
 import SolutionModel from '../models/Solution.js';
 import Solution from './Solution.jsx';
-
-const Arrow = ({ turn }) => !turn ? null : <div className={`arrow arrow-${turn}`} />
-
-const Car = ({ car }) => {
-    if (!car) return null;
-    return (
-        <div
-            className='car'
-            style={{ backgroundColor: car.color }}
-        />
-    );
-}
+import Test from './Test.jsx';
+import Arrow from './Arrow.jsx';
+import Car from './Car.jsx';
 
 const Road = ({ position, car, children }) => {
     return (
@@ -32,6 +23,7 @@ const Crossroads = ({ task }) => {
     const otherCars = task.cars.filter(car => car.position !== 'me');
     const solution = new SolutionModel(task);
     const { priorityRoadCars, nonPriorityRoadCars } = solution.getOrder();
+    const [showSolution, setShowSolution] = React.useState(false);
 
     const renderTrafficSign = (sign) => {
         if (sign === TrafficSign.NONE) return null;
@@ -79,11 +71,16 @@ const Crossroads = ({ task }) => {
                 <Road position={Position.WEST} car={westCar} />
                 <Road position={Position.EAST} car={eastCar} />
             </div>
-            <Solution 
-                task={task}
-                priorityRoadCars={priorityRoadCars}
-                nonPriorityRoadCars={nonPriorityRoadCars}
-            />
+            {showSolution && (
+                <Solution 
+                    task={task}
+                    priorityRoadCars={priorityRoadCars}
+                    nonPriorityRoadCars={nonPriorityRoadCars}
+                />
+            )}
+            {!showSolution && (
+                <Test solution={solution} />
+            )}
         </div>
     );
 };
