@@ -99,23 +99,41 @@ const Crossroads = ({ task }) => {
                 </div>
             </div>
             <div className='explanation'>
-                {priorityRoadCars.length > 0 && <h3 style={{ marginBottom: 0 }}>Път с предимство:</h3>}
+                {
+                    task.trafficSign !== TrafficSign.NONE &&
+                    priorityRoadCars.length > 0 &&
+                    <h3 style={{ marginBottom: 0 }}>Път с предимство:</h3>
+                }
                 {priorityRoadCars.map((car, index) => (
                     <div key={index} className='explanation-item'>
                         <b style={{ marginRight: 10 }}>{priorityRoadCars.length + index + 1} - </b>
                         {[...car.equals].map(c => <Car car={c} />)}
                         <div class='explanation-text'>
-                            {car.reason && <div>{car.reason}</div>}
+                            {car.reason && <div style={{ marginLeft: 10 }}>{car.reason}</div>}
                         </div>
                     </div>
                 ))}
-                {nonPriorityRoadCars.length > 0 && <h3 style={{ marginBottom: 0 }}>Път без предимство:</h3>}
+                {task.trafficSign === TrafficSign.NONE &&
+                <>
+                    <h3 style={{ marginBottom: 0 }}>Няма знаци:</h3>
+                    <div style={{ marginBottom: 10 }}>
+                        Прилагаме правилата за: <br/>
+                        1. дясностоящ<br/>
+                        2. При насрещни, завиващият наляво изчаква.
+                    </div>
+                </>
+                }
+                {
+                    task.trafficSign !== TrafficSign.NONE &&
+                    nonPriorityRoadCars.length > 0 &&
+                    <h3 style={{ marginBottom: 0 }}>Път без предимство:</h3>
+                }
                 {nonPriorityRoadCars.map((car, index) => (
                     <div key={index} className='explanation-item'>
                         <b style={{ marginRight: 10 }}>{priorityRoadCars.length + index + 1} - </b>
                         {[...car.equals].map(c => <Car car={c} />)}
                         <div class='explanation-text'>
-                            {car.reason && <div>{car.reason}</div>}
+                            {car.reason && <div style={{ marginLeft: 10 }}>{car.reason}</div>}
                         </div>
                     </div>
                 ))}

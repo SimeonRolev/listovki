@@ -49,36 +49,51 @@ class Solution {
                 return car;
             })
             .sort((a, b) => {
+                const aHasRightStanding = this.task.cars.find(car => getRightStandingPosition(a.position) === car.position)
+                const bHasRightStanding = this.task.cars.find(car => getRightStandingPosition(b.position) === car.position)
+                if (aHasRightStanding && !bHasRightStanding) return -1;
+                if (!aHasRightStanding && bHasRightStanding) return 1;
+            })
+            .sort((a, b) => {
+                console.log('Comparing:', a, b);
             // If one has priority over the other, it goes first
             if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
             if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;
 
-            if (getRightStandingPosition(a.position) === b.position) {
-                // B sits right of A => B Wins
-                b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
-                return 1;
-            }
+            const positionSet = new Set([a.position, b.position]);
+            const opposite =
+                (positionSet.has(Position.EAST) && positionSet.has(Position.WEST)) ||
+                (positionSet.has(Position.NORTH) && positionSet.has(Position.SOUTH));
+            const neighbouring = !opposite;
 
-            if (getRightStandingPosition(b.position) === a.position) {
-                // A sits right of B => A Wins
-                a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
-                return -1;
-            }
-
-            if (getOppositeStandingPosition(a.position) === b.position) {
-                if (a.turn === 'left' && b.turn === 'left') {
-                    return 0;
-                }
-
-                if (a.turn === 'left') {
-                    // B wins
-                    a.reason = 'Завива наляво => чака';
+            if (neighbouring) {
+                if (getRightStandingPosition(a.position) === b.position) {
+                    // B sits right of A => B Wins
+                    b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
                     return 1;
                 }
-                if (b.turn === 'left') {
-                    // A wins
-                    b.reason = 'Завива наляво => чака';
+
+                if (getRightStandingPosition(b.position) === a.position) {
+                    // A sits right of B => A Wins
+                    a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
                     return -1;
+                }
+            } else {
+                if (getOppositeStandingPosition(a.position) === b.position) {
+                    if (a.turn === 'left' && b.turn === 'left') {
+                        return 0;
+                    }
+    
+                    if (a.turn === 'left') {
+                        // B wins
+                        a.reason = 'Завива наляво => чака';
+                        return 1;
+                    }
+                    if (b.turn === 'left') {
+                        // A wins
+                        b.reason = 'Завива наляво => чака';
+                        return -1;
+                    }
                 }
             }
 
