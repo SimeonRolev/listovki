@@ -11,7 +11,9 @@ const Car = ({ car }) => {
     );
 }
 
-const Solution = ({ task, priorityRoadCars, nonPriorityRoadCars }) => {
+const Solution = ({ task }) => {
+    const { priorityRoadCars, nonPriorityRoadCars } = task.solution.solve();
+
     return (
         <div className='explanation'>
             {

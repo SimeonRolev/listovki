@@ -22,8 +22,6 @@ const Road = ({ position, car, children }) => {
 const Crossroads = ({ task }) => {
     const myCar = task.myCar;
     const otherCars = task.cars.filter(car => car.position !== 'me');
-    const solution = new SolutionModel(task);
-    const { priorityRoadCars, nonPriorityRoadCars } = solution.getOrder();
     const [showSolution, setShowSolution] = React.useState(false);
 
     const renderTrafficSign = (sign) => {
@@ -75,13 +73,11 @@ const Crossroads = ({ task }) => {
             {showSolution && (
                 <Solution 
                     task={task}
-                    priorityRoadCars={priorityRoadCars}
-                    nonPriorityRoadCars={nonPriorityRoadCars}
                 />
             )}
             {!showSolution && (
-                <TestPriorityOrder solution={solution} />
-                // <Test solution={solution} />
+                <TestPriorityOrder task={task} />
+                // <Test task={task} />
             )}
         </div>
     );

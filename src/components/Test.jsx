@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Car from './Car.jsx';
 
-const TestPriorityWeak = ({ solution, onSuccess }) => {
-    const task = solution.task;
+const TestPriorityWeak = ({ task, onSuccess }) => {
     const [selectedCars, setSelectedCars] = useState(new Set());
     const [checkPriorityError, setCheckPriorityError] = useState(null);
 
@@ -17,7 +16,7 @@ const TestPriorityWeak = ({ solution, onSuccess }) => {
     };
 
     const checkPriority = () => {
-        const { priorityRoadCars } = solution.getOrder();
+        const { priorityRoadCars } = task.solution.solve();
         const result =
             priorityRoadCars.every(car => selectedCars.has(car.color)) &&
             selectedCars.size === priorityRoadCars.length;
