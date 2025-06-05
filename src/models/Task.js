@@ -124,6 +124,12 @@ class Task {
         // Generate signs (traffic sign will automatically generate direction sign)
         this.generateTrafficSign();
 
+        // If we have 4 cars and traffic sign is NONE, regenerate the task
+        // This avoids ambiguous scenarios where right-of-way rules can't be applied
+        if (this.cars.length === 4 && this.trafficSign === TrafficSign.NONE) {
+            return this.generateRandomTask();
+        }
+
         return this;
     }
 
