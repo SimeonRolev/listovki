@@ -1,5 +1,5 @@
 // Import the Car class and enums from the index file
-import { Car, Position, Turn, Color, TrafficSign } from './index.js';
+import { Car, Position, Turn, Color, TrafficSign, WayDirectionSign } from './index.js';
 
 class Task {
     constructor() {
@@ -10,6 +10,7 @@ class Task {
         
         // Initialize signs
         this.trafficSign = TrafficSign.NONE;
+        this.directionSign = null;
         
         // Always create "my car" at Position.ME
         this.createMyCar();
@@ -75,7 +76,23 @@ class Task {
     generateTrafficSign() {
         const signs = Object.values(TrafficSign);
         this.trafficSign = signs[Math.floor(Math.random() * signs.length)];
+        
+        // Create direction sign based on traffic sign
+        this.generateDirectionSign();
+        
         return this.trafficSign;
+    }
+
+    generateDirectionSign() {
+        if (this.trafficSign === TrafficSign.NONE) {
+            this.directionSign = null;
+            return null;
+        }
+    
+        const iHaveWay = this.trafficSign === TrafficSign.RIGHT_OF_WAY ? true : 
+                        this.trafficSign === TrafficSign.NONE ? null : false;
+        this.directionSign = new WayDirectionSign(iHaveWay);
+        return this.directionSign;
     }
 
     getRandomPosition() {
@@ -111,7 +128,7 @@ class Task {
             }
         }
 
-        // Generate signs
+        // Generate signs (traffic sign will automatically generate direction sign)
         this.generateTrafficSign();
 
         return this;
@@ -135,6 +152,10 @@ class Task {
     // Get traffic sign
     getTrafficSign() {
         return this.trafficSign;
+    }
+
+    getDirectionSign() {
+        return this.directionSign;
     }
 
     // Get task description

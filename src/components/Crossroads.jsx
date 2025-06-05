@@ -1,6 +1,6 @@
 import React from 'react';
 import './Crossroads.css';
-import { Turn, TrafficSign } from '../models/index.js';
+import { Turn, TrafficSign, DirectionSign } from '../models/index.js';
 
 const Crossroads = ({ task }) => {
     const myCar = task.getMyCar();
@@ -32,6 +32,27 @@ const Crossroads = ({ task }) => {
         );
     };
 
+    const renderDirectionSign = (directionSign) => {
+        if (!directionSign) return null;
+
+        const directions = directionSign.directions;
+        const isNorthBold = directions === DirectionSign.NW || directions === DirectionSign.NE;
+        const isSouthBold = directions === DirectionSign.SW || directions === DirectionSign.SE;
+        const isWestBold = directions === DirectionSign.NW || directions === DirectionSign.SW;
+        const isEastBold = directions === DirectionSign.NE || directions === DirectionSign.SE;
+
+        return (
+            <div className="direction-sign">
+                <div className={`direction-letter ${isNorthBold ? 'bold' : ''}`}>N</div>
+                <div className="direction-row">
+                    <div className={`direction-letter ${isWestBold ? 'bold' : ''}`}>W</div>
+                    <div className={`direction-letter ${isEastBold ? 'bold' : ''}`}>E</div>
+                </div>
+                <div className={`direction-letter ${isSouthBold ? 'bold' : ''}`}>S</div>
+            </div>
+        );
+    };
+
     // Get cars by position
     const getCarByPosition = (position) => {
         return otherCars.find(car => car.position === position);
@@ -48,6 +69,7 @@ const Crossroads = ({ task }) => {
                     <div className='road'>
                         {renderCar(myCar)}
                         {renderTrafficSign(task.getTrafficSign())}
+                        {renderDirectionSign(task.getDirectionSign())}
                     </div>
                 </div>
                 <div className='road-container'>

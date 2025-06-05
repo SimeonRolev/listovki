@@ -158,7 +158,7 @@
     box-shadow: 1px 1px 1px 1px black, -1px -1px 1px 1px black;
 }
 
-.traffic-sign-give-way {
+.traffic-sign-right-of-way {
     background-color: yellow;
     width: 20px;
     height: 20px;
@@ -181,7 +181,7 @@
     }
 }
 
-.traffic-sign-right-of-way {
+.traffic-sign-give-way {
     width: 0;
     height: 0;
     position: absolute;
@@ -203,4 +203,41 @@
         border-right: 12px solid transparent;
         border-top: 20px solid white;
     }
+}
+
+.direction-sign {
+    position: absolute;
+    bottom: 10px;
+    left: 55px;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    padding: 4px;
+    box-sizing: border-box;
+    transform: rotate(180deg);
+}
+
+.direction-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.direction-letter {
+    font-weight: normal;
+    color: black;
+    line-height: 1;
+}
+
+.direction-letter.bold {
+    font-weight: bold;
 }

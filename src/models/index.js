@@ -29,6 +29,12 @@ const TrafficSign = {
     NONE: 'none'
 };
 
+const DirectionSign = {
+    NW: 'north-west',
+    NE: 'north-east',
+    SW: 'south-west',
+    SE: 'south-east'
+}
 
 class Car {
     constructor(position = Position.ME, turn = Turn.STRAIGHT, color) {
@@ -38,5 +44,16 @@ class Car {
     }
 }
 
+class WayDirectionSign {
+    constructor(iHaveWay = null) {
+        this.iHaveWay = iHaveWay; // Indicates if the car has the right of way
+        this.directions = iHaveWay === true
+            ? Math.random() < 0.5 ? DirectionSign.SW : DirectionSign.SE
+            : iHaveWay === false
+                ? Math.random() < 0.5 ? DirectionSign.NW : DirectionSign.NE
+                : null
+    }
+}
+
 // Export all classes and enums
-export { Car, Position, Turn, Color, TrafficSign };
+export { Car, Position, Turn, Color, TrafficSign, WayDirectionSign, DirectionSign };
