@@ -1,22 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Crossroads from './components/Crossroads'
 import Task from './models/Task'
 
 function App() {
-  const [task, setTask] = useState(null)
-
-  useEffect(() => {
-    // Create and generate a random task on component mount
-    const newTask = new Task()
-    newTask.generateRandomTask()
-    setTask(newTask)
-  }, [])
+  const [task, setTask] = useState(new Task())
 
   const generateNewTask = () => {
-    const newTask = new Task()
-    newTask.generateRandomTask()
-    setTask(newTask)
+    setTask(new Task())
   }
 
   if (!task) {

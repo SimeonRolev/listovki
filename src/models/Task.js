@@ -4,6 +4,7 @@ import Solution from './Solution.js';
 
 class Task {
     constructor() {
+        this.createdAt = Date.now(); // Add creation timestamp
         this.cars = [];
         this.myCar = null;
         this.availableColors = Object.values(Color);
@@ -15,6 +16,7 @@ class Task {
         
         // Always create "my car" at Position.SOUTH
         this.createMyCar();
+        this.generateRandomTask();
     }
 
     createMyCar() {

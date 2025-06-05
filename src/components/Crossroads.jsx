@@ -24,6 +24,10 @@ const Crossroads = ({ task }) => {
     const otherCars = task.cars.filter(car => car.position !== 'me');
     const [showSolution, setShowSolution] = React.useState(false);
 
+    const onTestSuccess = () => {
+        setShowSolution(true);
+    };
+
     const renderTrafficSign = (sign) => {
         if (sign === TrafficSign.NONE) return null;
 
@@ -76,7 +80,11 @@ const Crossroads = ({ task }) => {
                 />
             )}
             {!showSolution && (
-                <TestPriorityOrder task={task} />
+                <TestPriorityOrder 
+                    key={task.createdAt}
+                    task={task} 
+                    onSuccess={onTestSuccess}
+                />
                 // <Test task={task} />
             )}
         </div>
