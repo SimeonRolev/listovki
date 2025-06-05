@@ -1,5 +1,19 @@
 import { TrafficSign, Position, getRightStandingPosition, getOppositeStandingPosition } from './index.js';
 
+/**
+ * Compares two sets for equality.
+ * @param {Set} set1 - The first set to compare.
+ * @param {Set} set2 - The second set to compare.
+ * @returns {boolean} - True if sets contain the same elements, false otherwise.
+ */
+function areSetsEqual(set1, set2) {
+    if (set1.size !== set2.size) return false;
+    for (const item of set1) {
+        if (!set2.has(item)) return false;
+    }
+    return true;
+}
+
 class Solution {
     constructor(task) {
         this.task = task;
@@ -72,7 +86,19 @@ class Solution {
             b.equals.add(a);
 
             return 0;
-        })
+        }).reduce((acc, car) => {
+            // Check if car is already in accumulator with equal 'equals' set
+            const existingCar = acc.find(existingCar => 
+                areSetsEqual(existingCar.equals, car.equals)
+            );
+
+            // Only add the car if there's no car with the same equals set
+            if (!existingCar) {
+                acc.push(car);
+            }
+
+            return acc;
+        }, [])
 
         return {
             sortedCars
