@@ -1,20 +1,28 @@
 import React from 'react';
 import './Crossroads.css';
 import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
+import Solution from '../models/Solution.js';
 
 const Crossroads = ({ task }) => {
     const myCar = task.myCar;
     const otherCars = task.cars.filter(car => car.position !== 'me');
+    const solution = new Solution(task);
 
     const renderCar = (car) => {
         if (!car) return null;
 
         return (
             <>
-                <div className='car' style={{ backgroundColor: car.color }}>
-                    <span style={{ color: 'black' }}>
-                        {car.position}
-                    </span>
+                <div
+                    className='car'
+                    style={{
+                        backgroundColor: car.color,
+                        // border: solution.hasRightOfWay(car) ? ' px solid green' : ''
+                    }}
+                >
+                    {solution.hasRightOfWay(car) && (
+                        <div className='right-of-way' />
+                    )}
                 </div>
                 {car.turn !== Turn.STRAIGHT ? (
                     <div
