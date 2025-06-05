@@ -22,11 +22,6 @@ const Road = ({ position, car, children }) => {
 const Crossroads = ({ task }) => {
     const myCar = task.myCar;
     const otherCars = task.cars.filter(car => car.position !== 'me');
-    const [showSolution, setShowSolution] = React.useState(false);
-
-    const onTestSuccess = () => {
-        setShowSolution(true);
-    };
 
     const renderTrafficSign = (sign) => {
         if (sign === TrafficSign.NONE) return null;
@@ -74,19 +69,6 @@ const Crossroads = ({ task }) => {
                 <Road position={Position.WEST} car={westCar} />
                 <Road position={Position.EAST} car={eastCar} />
             </div>
-            {showSolution && (
-                <Solution 
-                    task={task}
-                />
-            )}
-            {!showSolution && (
-                <TestPriorityOrder 
-                    key={task.createdAt}
-                    task={task} 
-                    onSuccess={onTestSuccess}
-                />
-                // <Test task={task} />
-            )}
         </div>
     );
 };

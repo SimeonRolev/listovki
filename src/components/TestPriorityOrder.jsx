@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Car from './Car.jsx';
 import { t } from '../models/index.js';
 
+// TODO: Equal priority handler
 const TestPriorityOrder = ({ task, onSuccess }) => {
     const solution = task.solution;
     const [clickedOrder, setClickedOrder] = useState([]);
@@ -34,11 +35,12 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
             orderToCheck.length === correctOrder.length &&
             orderToCheck.every((color, index) => color === correctOrder[index]);
         
-        setCheckOrderError(isCorrect ? 'Правилно!' : `Грешка! Правилният ред е: ${correctOrder.join(', ')}`);
+        setCheckOrderError(isCorrect ? 'Правилно!' : `Грешка!`);
         setIsCompleted(true);
-        
         if (isCorrect) {
-            onSuccess?.();
+            setTimeout(() => {
+                onSuccess();
+            }, 1000)
         }
     };
 
@@ -114,23 +116,6 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
                 >
                     Нулиране
                 </button>
-                
-                {clickedOrder.length === task.cars.length && !isCompleted && (
-                    <button
-                        onClick={() => checkOrder()}
-                        style={{ 
-                            padding: '10px 20px',
-                            fontSize: '16px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        Проверка
-                    </button>
-                )}
                 
                 {checkOrderError && (
                     <div style={{ 
