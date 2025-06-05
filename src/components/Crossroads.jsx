@@ -7,6 +7,7 @@ const Crossroads = ({ task }) => {
     const myCar = task.myCar;
     const otherCars = task.cars.filter(car => car.position !== 'me');
     const solution = new Solution(task);
+    const orderedCars = solution.getOrder().map(car => car.color);
 
     const renderCar = (car) => {
         if (!car) return null;
@@ -20,9 +21,14 @@ const Crossroads = ({ task }) => {
                         // border: solution.hasRightOfWay(car) ? ' px solid green' : ''
                     }}
                 >
-                    {solution.hasRightOfWay(car) && (
-                        <div className='right-of-way' />
-                    )}
+                    <div
+                        className='right-of-way'
+                        style={{
+                            backgroundColor: solution.hasRightOfWay(car) ? 'green' : 'red',
+                        }}
+                    >
+                        {orderedCars.indexOf(car.color) + 1}
+                    </div>
                 </div>
                 {car.turn !== Turn.STRAIGHT ? (
                     <div
@@ -49,21 +55,20 @@ const Crossroads = ({ task }) => {
 
         return (
             <>
-            {/* {directionSign.directions} */}
-            <img
-                src='/direction-sign-se.png'
-                alt='Direction Sign South East'
-                className={`sign direction-sign`}
-                style={{
-                    transform: `rotate(${
-                        directionSign.directions === DirectionSign.NW ? 0 :
-                        directionSign.directions === DirectionSign.NE ? 90 :
-                        directionSign.directions === DirectionSign.SW ? 270 :
-                        directionSign.directions === DirectionSign.SE ? 180 :
-                        0
-                    }deg)`,
-                }}
-            />
+                {/* {directionSign.directions} */}
+                <img
+                    src='/direction-sign-se.png'
+                    alt='Direction Sign South East'
+                    className={`sign direction-sign`}
+                    style={{
+                        transform: `rotate(${directionSign.directions === DirectionSign.NW ? 0 :
+                                directionSign.directions === DirectionSign.NE ? 90 :
+                                    directionSign.directions === DirectionSign.SW ? 270 :
+                                        directionSign.directions === DirectionSign.SE ? 180 :
+                                            0
+                            }deg)`,
+                    }}
+                />
             </>
         );
     };
@@ -93,7 +98,7 @@ const Crossroads = ({ task }) => {
                         {renderCar(westCar)}
                     </div>
                 </div>
-                
+
                 <div className='road-container road-east'>
                     <div className='road'>
                         {renderCar(eastCar)}

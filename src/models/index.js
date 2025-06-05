@@ -7,6 +7,36 @@ const Position = {
     SOUTH: 'south'
 };
 
+function getRightStandingPosition (position) {
+    switch (position) {
+        case Position.EAST:
+            return Position.NORTH;
+        case Position.NORTH:
+            return Position.WEST;
+        case Position.WEST:
+            return Position.SOUTH;
+        case Position.SOUTH:
+            return Position.EAST;
+        default:
+            throw new Error(`Invalid position: ${position}`);
+    }
+}
+
+function getOppositeStandingPosition (position) {
+    switch (position) {
+        case Position.EAST:
+            return Position.WEST;
+        case Position.WEST:
+            return Position.EAST;
+        case Position.NORTH:
+            return Position.SOUTH;
+        case Position.SOUTH:
+            return Position.NORTH;
+        default:
+            throw new Error(`Invalid position: ${position}`);
+    }
+}
+
 // Enum for turn - left, right
 const Turn = {
     LEFT: 'left',
@@ -67,4 +97,4 @@ class WayDirectionSign {
 }
 
 // Export all classes and enums
-export { Car, Position, Turn, Color, TrafficSign, WayDirectionSign, DirectionSign };
+export { Car, Position, Turn, Color, TrafficSign, WayDirectionSign, DirectionSign, getRightStandingPosition, getOppositeStandingPosition };
