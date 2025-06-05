@@ -3,23 +3,21 @@ import './Crossroads.css';
 import { Turn, TrafficSign, DirectionSign, Position } from '../models/index.js';
 import Solution from '../models/Solution.js';
 
-const Car = ({ car }) => {
+const Car = ({ car, turnArrows }) => {
     if (!car) return null;
     return (
         <>
             <div
                 className='car'
-                style={{
-                    backgroundColor: car.color
-                }}
+                style={{ backgroundColor: car.color }}
             />
-            {car.turn !== Turn.STRAIGHT ? (
-                <div
-                    className='arrow arrow-left'
-                    style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
-                />
-            ) : (
-                <div className='arrow arrow-straight' />
+            {turnArrows && (
+                car.turn === Turn.STRAIGHT
+                    ? <div className='arrow arrow-straight' />
+                    : <div
+                        className='arrow arrow-left'
+                        style={{ transform: car.turn === Turn.RIGHT ? 'scaleX(-1)' : '' }}
+                    />
             )}
         </>
     );
@@ -76,25 +74,25 @@ const Crossroads = ({ task }) => {
             <div className="crossroads">
                 <div className='road-container road-south'>
                     <div className='road'>
-                        <Car car={myCar} />
+                        <Car car={myCar}  turnArrows={true} />
                         {renderTrafficSign(task.trafficSign)}
                         {renderDirectionSign(task.directionSign)}
                     </div>
                 </div>
                 <div className='road-container'>
                     <div className='road'>
-                        <Car car={northCar} />
+                        <Car car={northCar}  turnArrows={true} />
                     </div>
                 </div>
                 <div className='road-container road-west'>
                     <div className='road'>
-                        <Car car={westCar} />
+                        <Car car={westCar}  turnArrows={true} />
                     </div>
                 </div>
 
                 <div className='road-container road-east'>
                     <div className='road'>
-                        <Car car={eastCar} />
+                        <Car car={eastCar}  turnArrows={true} />
                     </div>
                 </div>
             </div>
@@ -114,14 +112,14 @@ const Crossroads = ({ task }) => {
                     </div>
                 ))}
                 {task.trafficSign === TrafficSign.NONE &&
-                <>
-                    <h3 style={{ marginBottom: 0 }}>Няма знаци:</h3>
-                    <div style={{ marginBottom: 10 }}>
-                        Прилагаме правилата за: <br/>
-                        1. дясностоящ<br/>
-                        2. При насрещни, завиващият наляво изчаква.
-                    </div>
-                </>
+                    <>
+                        <h3 style={{ marginBottom: 0 }}>Няма знаци:</h3>
+                        <div style={{ marginBottom: 10 }}>
+                            Прилагаме правилата за: <br />
+                            1. дясностоящ<br />
+                            2. При насрещни, завиващият наляво изчаква.
+                        </div>
+                    </>
                 }
                 {
                     task.trafficSign !== TrafficSign.NONE &&

@@ -25,16 +25,10 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>Traffic Intersection Simulator</h1>
         <button onClick={generateNewTask} className="new-task-btn">
-          Generate New Task
+          Пак - <span role="img" aria-label="pear">🍐</span>
         </button>
-      </header>
-      
-      <main className="app-main">
         <Crossroads task={task} />
-      </main>
     </div>
   )
 }

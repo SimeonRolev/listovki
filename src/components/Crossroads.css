@@ -8,14 +8,14 @@
 
 .crossroads {
     border: 2px solid #333;
-    width: 400px;
-    height: 400px;
+    width: 95vw;
+    height: 95vw;
     background-color: lightgreen;
     position: relative;
 
     /* Create a perspective view for the crossroads */
     /* perspective: 800px; */
-    transform: perspective(200px) rotateX(20deg);
+    transform: perspective(200px) rotateX(15deg);
     transform-origin: bottom center;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
