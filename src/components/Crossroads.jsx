@@ -28,28 +28,31 @@ const Crossroads = ({ task }) => {
         if (sign === TrafficSign.NONE) return null;
 
         return (
-            <div className={"traffic-sign traffic-sign-" + sign} />
+            <div className={"sign traffic-sign traffic-sign-" + sign} />
         );
     };
 
     const renderDirectionSign = (directionSign) => {
         if (!directionSign) return null;
 
-        const directions = directionSign.directions;
-        const isNorthBold = directions === DirectionSign.NW || directions === DirectionSign.NE;
-        const isSouthBold = directions === DirectionSign.SW || directions === DirectionSign.SE;
-        const isWestBold = directions === DirectionSign.NW || directions === DirectionSign.SW;
-        const isEastBold = directions === DirectionSign.NE || directions === DirectionSign.SE;
-
         return (
-            <div className="direction-sign">
-                <div className={`direction-letter ${isNorthBold ? 'bold' : ''}`}>N</div>
-                <div className="direction-row">
-                    <div className={`direction-letter ${isWestBold ? 'bold' : ''}`}>W</div>
-                    <div className={`direction-letter ${isEastBold ? 'bold' : ''}`}>E</div>
-                </div>
-                <div className={`direction-letter ${isSouthBold ? 'bold' : ''}`}>S</div>
-            </div>
+            <>
+            {directionSign.directions}
+            <img
+                src='/direction-sign-se.png'
+                alt='Direction Sign South East'
+                className={`sign direction-sign`}
+                style={{
+                    transform: `rotate(${
+                        directionSign.directions === DirectionSign.NW ? 0 :
+                        directionSign.directions === DirectionSign.NE ? 90 :
+                        directionSign.directions === DirectionSign.SW ? 270 :
+                        directionSign.directions === DirectionSign.SE ? 180 :
+                        0
+                    }deg)`,
+                }}
+            />
+            </>
         );
     };
 
@@ -88,12 +91,6 @@ const Crossroads = ({ task }) => {
                         {renderCar(leftCar)}
                     </div>
                 </div>
-            </div>
-
-            {/* Task description */}
-            <div className="task-info">
-                <h3>Current Task</h3>
-                <pre>{task.getDescription()}</pre>
             </div>
         </div>
     );
