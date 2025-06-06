@@ -29,12 +29,21 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
 
     const checkOrder = (orderToCheck = clickedOrder) => {
         const { sortedCars } = solution.solve();
-        const correctOrder = sortedCars.map(car => car.color);
-        
-        const isCorrect = 
-            orderToCheck.length === correctOrder.length &&
-            orderToCheck.every((color, index) => color === correctOrder[index]);
-        
+        const equalitySets = sortedCars.map(set => set.equals);
+        const duplicateEqualitySets = equalitySets.reduce((acc, curr) => {
+            for (let i = 0; i < curr.size; i++) {
+                acc.push(curr);
+            }
+            return acc;
+        }, []);
+
+        const isCorrect = orderToCheck.every((color, index) => {
+            return Array
+                .from(duplicateEqualitySets[index])
+                .map(c => c.color)
+                .includes(color);
+        })
+
         setCheckOrderError(isCorrect ? 'Правилно!' : `Грешка!`);
         setIsCompleted(true);
         if (isCorrect) {

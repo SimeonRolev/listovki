@@ -9,7 +9,7 @@ function App() {
   const [task, setTask] = useState(new Task())
   const [showSolution, setShowSolution] = React.useState(false);
   const onTestSuccess = () => {
-    generateNewTask();
+    // generateNewTask();
   };
 
   const generateNewTask = () => {

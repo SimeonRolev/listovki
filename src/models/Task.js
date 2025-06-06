@@ -131,7 +131,7 @@ class Task {
             this.solution = new Solution(this);
             this.solution.solve();
         } catch (error) {
-            console.error("Error generating solution:", error);
+            // console.warn("Error generating solution:", error);
             return this.generateRandomTask(); // Retry if there's an error
         }
 
