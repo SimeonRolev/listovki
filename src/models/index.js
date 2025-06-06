@@ -21,6 +21,7 @@ function getRightStandingPosition (position) {
             throw new Error(`Invalid position: ${position}`);
     }
 }
+window.getRightStandingPosition = getRightStandingPosition;
 
 function getOppositeStandingPosition (position) {
     switch (position) {
@@ -36,7 +37,7 @@ function getOppositeStandingPosition (position) {
             throw new Error(`Invalid position: ${position}`);
     }
 }
-
+window.getOppositeStandingPosition = getOppositeStandingPosition;
 // Enum for turn - left, right
 const Turn = {
     LEFT: 'left',

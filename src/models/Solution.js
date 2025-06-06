@@ -13,7 +13,7 @@ function areSetsEqual(set1, set2) {
     }
     return true;
 }
-
+window.areSetsEqual = areSetsEqual;
 class Solution {
     constructor(task) {
         this.task = task;
@@ -39,6 +39,8 @@ class Solution {
         if (this.task.cars.length === 4 && this.task.trafficSign === TrafficSign.NONE) {
             throw new Error('Cannot determine order with 4 cars and no traffic sign - right-standing loop.');
         }
+
+        window.task = this.task;
 
         const sortedCars = this.task.cars
             .slice()
@@ -77,6 +79,20 @@ class Solution {
                     }
                 } else {
                     if (getOppositeStandingPosition(a.position) === b.position) {
+                        if (this.task.cars
+                            .map(c => c.position)
+                            .includes(getRightStandingPosition(a.position))
+                        ) {
+                            return 1;
+                        }
+
+                        if (this.task.cars
+                            .map(c => c.position)
+                            .includes(getRightStandingPosition(b.position))
+                        ) {
+                            return -1;
+                        }
+
                         if (a.turn === 'left' && b.turn === 'left') {
                             throw new Error('Both cars cannot turn left at the same time when facing each other and have the same priority.');
                         }
