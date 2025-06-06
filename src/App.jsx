@@ -8,8 +8,14 @@ import Solution from './components/Solution'
 function App() {
   const [task, setTask] = useState(new Task())
   const [showSolution, setShowSolution] = React.useState(false);
+  const [consecutiveSuccesses, setConsecutiveSuccesses] = useState(0);
+  
   const onTestSuccess = () => {
-    // generateNewTask();
+    setConsecutiveSuccesses(prev => prev + 1);
+  };
+
+  const onTestFailure = () => {
+    setConsecutiveSuccesses(0);
   };
 
   const generateNewTask = () => {
@@ -22,9 +28,14 @@ function App() {
 
   return (
     <div className="app">
-      <button onClick={generateNewTask} className="new-task-btn">
-        Пак - <span role="img" aria-label="pear">🍐</span>
-      </button>
+      <div className="header-section">
+        <button onClick={generateNewTask} className="new-task-btn">
+          Пак - <span role="img" aria-label="pear">🍐</span>
+        </button>
+        <div className="combo-counter">
+          Combo: {consecutiveSuccesses}
+        </div>
+      </div>
       <Crossroads task={task} />
       <div className='test-option'>
         {<input
@@ -47,6 +58,7 @@ function App() {
           key={task.createdAt}
           task={task}
           onSuccess={onTestSuccess}
+          onFailure={onTestFailure}
         />
         // <Test task={task} />
       )}

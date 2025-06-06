@@ -3,7 +3,7 @@ import Car from './Car.jsx';
 import { t } from '../models/index.js';
 
 // TODO: Equal priority handler
-const TestPriorityOrder = ({ task, onSuccess }) => {
+const TestPriorityOrder = ({ task, onSuccess, onFailure }) => {
     const solution = task.solution;
     const [clickedOrder, setClickedOrder] = useState([]);
     const [checkOrderError, setCheckOrderError] = useState(null);
@@ -47,9 +47,9 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
         setCheckOrderError(isCorrect ? 'Правилно!' : `Грешка!`);
         setIsCompleted(true);
         if (isCorrect) {
-            setTimeout(() => {
-                onSuccess();
-            }, 1000)
+            onSuccess?.();
+        } else {
+            onFailure?.();
         }
     };
 
