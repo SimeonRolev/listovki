@@ -172,7 +172,6 @@
 }
 
 .direction-sign {
-    bottom: 36%;
     background-image: url('/direction-sign-se.png');
     clip-path: inset(0 4% 0 0);
 }

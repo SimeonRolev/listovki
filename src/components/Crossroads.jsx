@@ -38,6 +38,7 @@ const Crossroads = ({ task }) => {
             <div
                 className={`sign direction-sign`}
                 style={{
+                    bottom: '36%',
                     transform: `rotate(${directionSign.directions === DirectionSign.NW ? 0 :
                         directionSign.directions === DirectionSign.NE ? 90 :
                             directionSign.directions === DirectionSign.SW ? 270 :
