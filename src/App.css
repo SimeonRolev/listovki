@@ -17,15 +17,16 @@
 .header-section {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
     margin-bottom: 20px;
 }
 
 .combo-counter {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     font-weight: bold;
     color: #007bff;
-    padding: 10px 15px;
+    padding: 5px;
     border: 2px solid #007bff;
     border-radius: 5px;
     background-color: #f8f9fa;
@@ -40,7 +41,6 @@ button {
     background-color: #007bff;
     color: white;
     transition: background-color 0.3s ease;
-    font-size: 2rem;
 }
 
 /* Modal styles */
