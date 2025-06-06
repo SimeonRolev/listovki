@@ -59,13 +59,14 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
     };
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <h2>Кликнете автомобилите в реда, в който трябва да минат</h2>
+        <div>
+            <h4>Кликнете автомобилите в реда, в който трябва да минат</h4>
             
             <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', 
-                gap: '10px', 
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '10px',
                 marginBottom: '20px' 
             }}>
                 {task.cars.map((car) => {
@@ -114,7 +115,13 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
                 })}
             </div>
             
-            <div style={{ marginTop: '20px' }}>
+            <div
+                style={{
+                    marginTop: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                }}>
                 <button
                     onClick={reset}
                     style={{ 
@@ -128,7 +135,6 @@ const TestPriorityOrder = ({ task, onSuccess }) => {
                 
                 {checkOrderError && (
                     <div style={{ 
-                        marginTop: '10px', 
                         padding: '10px',
                         backgroundColor: checkOrderError.includes('Правилно') ? '#d4edda' : '#f8d7da',
                         border: `1px solid ${checkOrderError.includes('Правилно') ? '#c3e6cb' : '#f5c6cb'}`,
