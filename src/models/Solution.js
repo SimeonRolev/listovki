@@ -44,17 +44,8 @@ class Solution {
 
         const [priorityRoadCars, nonPriorityRoadCars] = this.task.cars
             .slice()
-            .map(car => {
-                car.equals = new Set([car]);
-                return car;
-            })
-            .sort((a, b) => {
-                const aHasRightStanding = this.task.cars.find(car => getRightStandingPosition(a.position) === car.position)
-                const bHasRightStanding = this.task.cars.find(car => getRightStandingPosition(b.position) === car.position)
-                if (aHasRightStanding && !bHasRightStanding) return -1;
-                if (!aHasRightStanding && bHasRightStanding) return 1;
-            })
             .reduce((acc, car) => {
+                car.equals = new Set([car]);
                 acc[this.onPriorityRoad(car) ? 0 : 1].push(car)
                 return acc;
             }, [[], []])
