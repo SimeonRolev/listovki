@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "npm run build-preview && vite preview -c vite.preview.config.js",
+    "build-preview": "rm -rf dist-preview && vite build -c vite.preview.config.js"
   },
   "dependencies": {
     "react": "^19.1.0",
