@@ -7,5 +7,7 @@ export default defineConfig({
   base: "/listovki/",
   build: {
       outDir: "dist-preview"
-  }
+  },
+  // Ensure public assets are correctly handled
+  publicDir: 'public'
 })

@@ -128,16 +128,16 @@
 }
 
 .arrow-right {
-    background-image: url('arrow-turn-right.svg');
+    background-image: url('/arrow-turn-right.svg');
 }
 
 .arrow-left {
-    background-image: url('arrow-turn-right.svg');
+    background-image: url('/arrow-turn-right.svg');
     transform: rotate(180deg) scale(-1, 1);
 }
 
 .arrow-straight {
-    background-image: url('arrow-straight.svg');
+    background-image: url('/arrow-straight.svg');
 }
 
 .sign {
@@ -154,23 +154,23 @@
 }
 
 .traffic-sign-stop {
-    background-image: url('sign-stop.png');
+    background-image: url('/sign-stop.png');
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
 
 .traffic-sign-right-of-way {
-    background-image: url('sign-right-of-way.png');
+    background-image: url('/sign-right-of-way.png');
     clip-path: polygon(50% 0%, 50% 0%, 100% 50%, 100% 44%, 44% 100%, 50% 100%, 0% 50%, 0% 50%);
 }
 
 .traffic-sign-give-way {
-    background-image: url('sign-give-way.png');
+    background-image: url('/sign-give-way.png');
     clip-path: polygon(47% 101%, -9% 4%, 108% -4%);
 }
 
 .direction-sign {
     bottom: 36%;
-    background-image: url('direction-sign-se.png');
+    background-image: url('/direction-sign-se.png');
     clip-path: inset(0 4% 0 0);
 }
 

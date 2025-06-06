@@ -35,21 +35,17 @@ const Crossroads = ({ task }) => {
         if (!directionSign.directions) return null;
 
         return (
-            <>
-                <img
-                    src='/direction-sign-se.png'
-                    alt='Direction Sign South East'
-                    className={`sign direction-sign`}
-                    style={{
-                        transform: `rotate(${directionSign.directions === DirectionSign.NW ? 0 :
-                            directionSign.directions === DirectionSign.NE ? 90 :
-                                directionSign.directions === DirectionSign.SW ? 270 :
-                                    directionSign.directions === DirectionSign.SE ? 180 :
-                                        0
-                            }deg)`,
-                    }}
-                />
-            </>
+            <div
+                className={`sign direction-sign`}
+                style={{
+                    transform: `rotate(${directionSign.directions === DirectionSign.NW ? 0 :
+                        directionSign.directions === DirectionSign.NE ? 90 :
+                            directionSign.directions === DirectionSign.SW ? 270 :
+                                directionSign.directions === DirectionSign.SE ? 180 :
+                                    0
+                        }deg)`,
+                }}
+            />
         );
     };
 
