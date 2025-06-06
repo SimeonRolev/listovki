@@ -35,14 +35,14 @@ class Solution {
         }
     }
 
-    solve () {
+    solve() {
         if (this.task.cars.length === 4 && this.task.trafficSign === TrafficSign.NONE) {
             throw new Error('Cannot determine order with 4 cars and no traffic sign - right-standing loop.');
         }
 
         window.task = this.task;
 
-        const sortedCars = this.task.cars
+        const [priorityRoadCars, nonPriorityRoadCars] = this.task.cars
             .slice()
             .map(car => {
                 car.equals = new Set([car]);
@@ -54,87 +54,87 @@ class Solution {
                 if (aHasRightStanding && !bHasRightStanding) return -1;
                 if (!aHasRightStanding && bHasRightStanding) return 1;
             })
-            .sort((a, b) => {
-                // If one has priority over the other, it goes first
-                if (this.onPriorityRoad(a) && !this.onPriorityRoad(b)) return -1;
-                if (!this.onPriorityRoad(a) && this.onPriorityRoad(b)) return 1;
-
-                const positionSet = new Set([a.position, b.position]);
-                const opposite =
-                    (positionSet.has(Position.EAST) && positionSet.has(Position.WEST)) ||
-                    (positionSet.has(Position.NORTH) && positionSet.has(Position.SOUTH));
-                const neighbouring = !opposite;
-
-                if (neighbouring) {
-                    if (getRightStandingPosition(a.position) === b.position) {
-                        // B sits right of A => B Wins
-                        b.reason = `Дясностоящ на ${t(a.color)} => с предимство`;
-                        return 1;
-                    }
-
-                    if (getRightStandingPosition(b.position) === a.position) {
-                        // A sits right of B => A Wins
-                        a.reason = `Дясностоящ на ${t(b.color)} => с предимство`;
-                        return -1;
-                    }
-                } else {
-                    if (getOppositeStandingPosition(a.position) === b.position) {
-                        if (this.task.cars
-                            .map(c => c.position)
-                            .includes(getRightStandingPosition(a.position))
-                        ) {
-                            return 1;
-                        }
-
-                        if (this.task.cars
-                            .map(c => c.position)
-                            .includes(getRightStandingPosition(b.position))
-                        ) {
-                            return -1;
-                        }
-
-                        if (a.turn === 'left' && b.turn === 'left') {
-                            throw new Error('Both cars cannot turn left at the same time when facing each other and have the same priority.');
-                        }
-
-                        if (a.turn === 'left') {
-                            // B wins
-                            a.reason = 'Завива наляво => чака';
-                            return 1;
-                        }
-                        if (b.turn === 'left') {
-                            // A wins
-                            b.reason = 'Завива наляво => чака';
-                            return -1;
-                        }
-                    }
-                }
-
-                a.equals.add(b);
-                b.equals.add(a);
-
-                return 0;
-            }).reduce((acc, car) => {
-                // Check if car is already in accumulator with equal 'equals' set
-                const existingCar = acc.find(existingCar =>
-                    areSetsEqual(existingCar.equals, car.equals)
-                );
-
-                // Only add the car if there's no car with the same equals set
-                if (!existingCar) {
-                    acc.push(car);
-                }
-
+            .reduce((acc, car) => {
+                acc[this.onPriorityRoad(car) ? 0 : 1].push(car)
                 return acc;
-            }, [])
+            }, [[], []])
+            .map(priorityGroup => {
+                return priorityGroup
+                    .sort((a, b) => {
+                        const positionSet = new Set([a.position, b.position]);
+                        const opposite =
+                            (positionSet.has(Position.EAST) && positionSet.has(Position.WEST)) ||
+                            (positionSet.has(Position.NORTH) && positionSet.has(Position.SOUTH));
+                        const neighbouring = !opposite;
 
-        const [priorityRoadCars, nonPriorityRoadCars] = sortedCars.reduce((acc, car) => {
-            acc[this.onPriorityRoad(car) ? 0 : 1].push(car)
-            return acc;
-        }, [[], []]);
+                        if (neighbouring) {
+                            if (getRightStandingPosition(a.position) === b.position) {
+                                b.reason = `Дясностоящ на ${t(a.color)}`;
+                                return 1;
+                            }
+
+                            if (getRightStandingPosition(b.position) === a.position) {
+                                a.reason = `Дясностоящ на ${t(b.color)}`;
+                                return -1;
+                            }
+                        } else {
+                            if (getOppositeStandingPosition(a.position) === b.position) {
+                                if (priorityGroup.length === 2) {
+                                    if (a.turn === 'left' && b.turn === 'left') {
+                                        throw new Error('Both cars cannot turn left at the same time when facing each other and have the same priority.');
+                                    }
+
+                                    if (a.turn === 'left') {
+                                        // B wins
+                                        a.reason = 'Нарещни, с еднакво предимство - завиващият наляво чака';
+                                        return 1;
+                                    }
+                                    if (b.turn === 'left') {
+                                        // A wins
+                                        b.reason = 'Нарещни, с еднакво предимство - завиващият наляво чака';
+                                        return -1;
+                                    }
+
+                                    a.equals.add(b);
+                                    b.equals.add(a);
+                                    a.reason = 'Нарещни, с еднакво предимство - няма завиващи наляво';
+                                    b.reason = 'Нарещни, с еднакво предимство - няма завиващи наляво';
+                                } else {
+                                    if (
+                                        priorityGroup.map(c => c.position).includes(getRightStandingPosition(a.position)) &&
+                                        !priorityGroup.map(c => c.position).includes(getRightStandingPosition(b.position))
+                                    ) {
+                                        b.reason = `Най-десен от всички`;
+                                        return 1;
+                                    }
+
+                                    if (
+                                        !priorityGroup.map(c => c.position).includes(getRightStandingPosition(a.position)) &&
+                                        priorityGroup.map(c => c.position).includes(getRightStandingPosition(b.position))
+                                    ) {
+                                        a.reason = `Най-десен от всички`;
+                                        return -1;
+                                    }
+                                }
+                            }
+                        }
+                    }).reduce((acc, car) => {
+                        // Check if car is already in accumulator with equal 'equals' set
+                        const existingCar = acc.find(existingCar =>
+                            areSetsEqual(existingCar.equals, car.equals)
+                        );
+
+                        // Only add the car if there's no car with the same equals set
+                        if (!existingCar) {
+                            acc.push(car);
+                        }
+
+                        return acc;
+                    }, [])
+            })
 
         return {
-            sortedCars,
+            sortedCars: priorityRoadCars.concat(nonPriorityRoadCars),
             priorityRoadCars,
             nonPriorityRoadCars,
         };
