@@ -141,15 +141,18 @@
 }
 
 .sign {
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.road-container .sign {
     position: absolute;
     width: 16%;
     height: 16%;
     z-index: 5;
     bottom: 20%;
     right: 20%;
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
     transform: rotate(180deg);
 }
 
@@ -160,7 +163,7 @@
 
 .traffic-sign-right-of-way {
     background-image: url('/sign-right-of-way.png');
-    clip-path: polygon(50% 0%, 50% 0%, 100% 50%, 100% 44%, 44% 100%, 50% 100%, 0% 50%, 0% 50%);
+    clip-path: polygon(47% 0%, 50% 0%, 100% 50%, 100% 50%, 47% 100%, 50% 100%, 0% 50%, 0% 47%);
 }
 
 .traffic-sign-give-way {

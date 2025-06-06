@@ -4,11 +4,13 @@ import Crossroads from './components/Crossroads'
 import Task from './models/Task'
 import TestPriorityOrder from './components/TestPriorityOrder'
 import Solution from './components/Solution'
+import RulesModal from './components/RulesModal'
 
 function App() {
   const [task, setTask] = useState(new Task())
   const [showSolution, setShowSolution] = React.useState(false);
   const [consecutiveSuccesses, setConsecutiveSuccesses] = useState(0);
+  const [showRulesModal, setShowRulesModal] = useState(false);
   
   const onTestSuccess = () => {
     setConsecutiveSuccesses(prev => prev + 1);
@@ -35,6 +37,9 @@ function App() {
         <div className="combo-counter">
           Combo: {consecutiveSuccesses}
         </div>
+        <button onClick={() => setShowRulesModal(true)} className="rules-btn">
+          Правила
+        </button>
       </div>
       <Crossroads task={task} />
       <div className='test-option'>
@@ -62,6 +67,11 @@ function App() {
         />
         // <Test task={task} />
       )}
+      
+      <RulesModal 
+        isOpen={showRulesModal} 
+        onClose={() => setShowRulesModal(false)} 
+      />
     </div>
   )
 }
